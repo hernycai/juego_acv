@@ -386,7 +386,7 @@ function guiaVisual(container: HTMLElement): Promise<void> {
 
 // ============ MEMORIA ============
 const memState = {
-  emojis: ['🍎','🍌','🍇','🍓','🍊','🥝','🍉','🌻'],
+  emojis: ['🍎','','🍇','','🍊','','🍉',''],
   config: { facil:{pares:4}, medio:{pares:6}, dificil:{pares:8} } as Record<Dificultad,{pares:number}>,
   nivel: 'facil' as Dificultad, primera: null as HTMLButtonElement | null,
   bloqueada: false, intentos: 0, aciertos: 0, segundos: 0,
@@ -457,9 +457,9 @@ function memFinalizar(): void {
 // ============ ATENCIÓN ============
 const atState = {
   config: {
-    facil: { cols: 3, tiempo: 0, rondas: 6, pares: [['🐶','🐟'],['🌞','🌙'],['🍎','🍌'],['⚽','🎈'],['🚗','🌸'],['🍕','☂️']] },
-    medio: { cols: 4, tiempo: 12, rondas: 7, pares: [['🐱','🐯'],['🍊','🍋'],['🌼','🌻'],['🐸','🐢'],['🍩','🍪'],['⚽','🏀']] },
-    dificil: { cols: 5, tiempo: 8, rondas: 8, pares: [['🐤','🐥'],['🌝','🌕'],['😮','😯'],['🐇','🐁'],['🍑','🍒'],['🦆','🦢']] }
+    facil: { cols: 3, tiempo: 0, rondas: 6, pares: [['🐶',''],['🌞',''],['🍎',''],['⚽',''],['🚗',''],['🍕','️']] },
+    medio: { cols: 4, tiempo: 12, rondas: 7, pares: [['🐱',''],['🍊',''],['🌼',''],['🐸',''],['🍩',''],['⚽','']] },
+    dificil: { cols: 5, tiempo: 8, rondas: 8, pares: [['🐤',''],['🌝',''],['😮','😯'],['🐇','🐁'],['🍑','🍒'],['🦆','🦢']] }
   } as Record<Dificultad, { cols: number; tiempo: number; rondas: number; pares: string[][] }>,
   nivel: 'facil' as Dificultad, ronda: 0, aciertos: 0, errores: 0, tiempoTotal: 0, restante: 0,
   timerT: null as number | null, timerR: null as number | null, resuelta: false, sesion: 0
@@ -646,6 +646,10 @@ function coFinalizar(): void {
 }
 
 // ============ VIAJE A LAS ESTRELLAS ============
+// Extensión local del tipo Obstaculo para marcar si ya tiene estrella encima
+// (evita tocar types.ts)
+interface ObstaculoViaje extends Obstaculo { conEstrella?: boolean; }
+
 const viajeState = {
   canvas: null as HTMLCanvasElement | null, ctx: null as CanvasRenderingContext2D | null,
   W: 860, H: 420, sueloY: 0,
@@ -657,7 +661,7 @@ const viajeState = {
   nivel: 'facil' as Dificultad, corriendo: false, rafId: 0, ultimoTs: 0,
   px: 90, py: 0, vy: 0, saltando: false, invulnerable: 0,
   velocidad: 0, tiempo: 0, vidas: 3, estrellasRec: 0, obstaculosSaltados: 0, puntos: 0,
-  obstaculos: [] as Obstaculo[], estrellas: [] as EstrellaItem[], fondos: [] as FondoEstrella[],
+  obstaculos: [] as ObstaculoViaje[], estrellas: [] as EstrellaItem[], fondos: [] as FondoEstrella[],
   timerObs: 0, proxObs: 1500, timerEst: 0, proxEst: 1000,
   avisoActivo: false, sesion: 0
 };
@@ -763,9 +767,24 @@ function viajeMostrarAviso(): void {
 }
 function viajeCrearEstrella(): void {
   const s = viajeState;
-  const minY = s.sueloY - 150, maxY = s.sueloY - 40;
-  const y = Terapia.hemianopsia ? rand(minY + 40, maxY - 20) : rand(minY, maxY);
-  s.estrellas.push({ x: s.W + 40, y, r: 22, tomada: false });
+  // ⭐ Estrellas a la altura del astronauta (salto corto), nunca más arriba
+  const minY = s.sueloY - 100;
+  const maxY = s.sueloY - 55;
+  const y = Terapia.hemianopsia ? rand(minY + 15, maxY) : rand(minY, maxY);
+
+  // Si hay un obstáculo cerca de la salida, la estrella va ENCIMA de él:
+  // el mismo salto que esquiva el obstáculo agarra la estrella (se acabó el choque)
+  const obs = s.obstaculos.find(o => !o.conEstrella && o.x > s.W - 220 && o.x < s.W + 160);
+  if (obs) {
+    obs.conEstrella = true;
+    s.estrellas.push({ x: obs.x + obs.w / 2, y: s.sueloY - 95, r: 22, tomada: false });
+  } else {
+    // Estrella libre en un hueco seguro: se atrasa el próximo obstáculo
+    // para que el salto de agarrarla nunca termine en choque
+    s.estrellas.push({ x: s.W + 40, y, r: 22, tomada: false });
+    s.timerObs = 0;
+    s.proxObs = Math.max(s.proxObs, 1000);
+  }
 }
 function viajeColisionar(): void {
   const s = viajeState;
@@ -919,7 +938,9 @@ function initMascota(): void {
 // ============ INIT ============
 function init(): void {
   cargarTerapia();
-    (['hemianopsia', 'cimt', 'saliencia', 'multi', 'enfoque'] as const).forEach(k => {
+  // ✅ FIX TS2322: "as const" limita las claves a los 5 toggles booleanos
+  // (sin incluir "fotos", que es string[])
+  (['hemianopsia', 'cimt', 'saliencia', 'multi', 'enfoque'] as const).forEach(k => {
     const sw = $<HTMLInputElement>('#sw-' + k);
     sw.addEventListener('change', () => { Terapia[k] = sw.checked; guardarTerapia(); aplicarUITerapia(); Sonido.click(); });
   });
