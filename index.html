@@ -34,15 +34,12 @@ button{font:inherit;cursor:pointer;touch-action:manipulation;user-select:none;}
 @keyframes aparecer{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 .titulo-pantalla{text-align:center;font-size:1.8rem;margin-bottom:10px;}
 .descripcion{text-align:center;font-size:1.1rem;color:var(--texto-suave);margin-bottom:10px;}
-
 .barra{
   position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
   background:var(--fondo-suave);border-bottom:2px solid var(--borde);padding:10px 16px;
 }
 .barra h2{flex:1;font-size:1.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-/* Botones críticos a la DERECHA (no en campo visual afectado) */
 .barra .grupo-derecha{display:flex;gap:8px;}
-
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
   min-height:var(--alto-boton);padding:12px 26px;border:none;border-radius:16px;
@@ -57,9 +54,7 @@ button{font:inherit;cursor:pointer;touch-action:manipulation;user-select:none;}
 .btn-suave{background:var(--tarjeta);color:var(--texto);border:3px solid var(--borde);}
 .btn-peligro-suave{background:var(--error-suave);color:var(--texto);}
 .btn-mini{min-height:54px;padding:8px 14px;font-size:.95rem;border-radius:14px;}
-.btn-izq{align-self:flex-start;} /* para CIMT */
 .acciones{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px;}
-
 .tarjeta{
   background:var(--tarjeta);border-radius:var(--radio);box-shadow:var(--sombra);
   padding:26px;border:1px solid var(--borde);margin-top:20px;
@@ -69,11 +64,7 @@ button{font:inherit;cursor:pointer;touch-action:manipulation;user-select:none;}
 .hero-emojis{font-size:3rem;letter-spacing:.4em;margin-bottom:8px;}
 .inicio-hero h1{font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.2;}
 .subtitulo{font-size:1.2rem;color:var(--texto-suave);margin-top:8px;}
-
-/* ======= OPCIONES TERAPÉUTICAS ======= */
-.opciones-terapeuticas{
-  display:grid;gap:14px;margin-top:18px;
-}
+.opciones-terapeuticas{display:grid;gap:14px;margin-top:18px;}
 .opcion-terap{
   display:flex;align-items:center;gap:14px;padding:16px;
   background:var(--fondo-suave);border:2px solid var(--borde);border-radius:16px;
@@ -84,8 +75,6 @@ button{font:inherit;cursor:pointer;touch-action:manipulation;user-select:none;}
 .opcion-titulo{font-weight:700;font-size:1.05rem;margin-bottom:2px;}
 .opcion-desc{font-size:.88rem;color:var(--texto-suave);}
 .opcion-emoji{font-size:1.8rem;}
-
-/* Switch */
 .switch{position:relative;width:56px;height:32px;flex-shrink:0;}
 .switch input{opacity:0;width:0;height:0;}
 .slider{
@@ -98,8 +87,6 @@ button{font:inherit;cursor:pointer;touch-action:manipulation;user-select:none;}
 }
 input:checked + .slider{background:var(--primario);}
 input:checked + .slider::before{transform:translateX(24px);}
-
-/* Menú de juegos */
 .menu-juegos{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:24px;}
 .juego-card{
   display:flex;flex-direction:column;align-items:center;gap:8px;padding:30px 20px;
@@ -112,7 +99,6 @@ input:checked + .slider::before{transform:translateX(24px);}
 .jc-memoria{background:linear-gradient(145deg,#59BCA5,#3E9E92);}
 .jc-atencion{background:linear-gradient(145deg,#F6A96A,#EF8B4E);}
 .jc-coordinacion{background:linear-gradient(145deg,#7FB8E6,#5C9BD1);}
-
 .segmentado{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
 .seg-opcion{
   flex:1 1 120px;min-height:var(--alto-boton);border-radius:16px;
@@ -121,7 +107,6 @@ input:checked + .slider::before{transform:translateX(24px);}
 }
 .seg-opcion.sel{background:var(--primario);border-color:var(--primario);color:#fff;}
 .segmentado-chico .seg-opcion{flex:1 1 100px;min-height:54px;font-size:.95rem;}
-
 .stats{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0;}
 .stat{
   background:var(--tarjeta);border:2px solid var(--borde);padding:10px 18px;
@@ -132,7 +117,6 @@ input:checked + .slider::before{transform:translateX(24px);}
   margin:12px 0;color:var(--texto-suave);
 }
 .fb-exito{color:var(--verde-texto);}
-
 .tablero-memoria{
   display:grid;gap:14px;grid-template-columns:repeat(4,1fr);
   max-width:640px;margin:12px auto;
@@ -153,7 +137,6 @@ input:checked + .slider::before{transform:translateX(24px);}
 .cara-frente img{width:100%;height:100%;object-fit:cover;}
 .carta.acertada{pointer-events:none;}
 .carta.acertada .cara-frente{background:var(--exito-suave);border-color:var(--exito);}
-
 .tablero-atencion{display:grid;gap:12px;max-width:640px;margin:14px auto;}
 .celda{
   aspect-ratio:1;background:var(--tarjeta);border:3px solid var(--borde);
@@ -163,13 +146,11 @@ input:checked + .slider::before{transform:translateX(24px);}
 .celda:active{transform:scale(.95);}
 .celda.correcta{background:var(--exito-suave);border-color:var(--exito);}
 .celda.incorrecta{background:var(--error-suave);border-color:var(--error);}
-
 .barra-tiempo{
   height:14px;background:var(--borde);border-radius:99px;overflow:hidden;
   max-width:640px;margin:10px auto;
 }
 .barra-tiempo-fill{height:100%;width:100%;background:var(--primario);transition:width .1s linear;}
-
 .zona-coord{
   position:relative;height:min(58vh,520px);min-height:380px;
   background:var(--fondo-suave);border:3px dashed var(--borde);
@@ -192,8 +173,6 @@ input:checked + .slider::before{transform:translateX(24px);}
 .marca-fallo{background:var(--error);}
 .marca-acierto{background:var(--exito);}
 @keyframes desvanecer{to{opacity:0;transform:scale(1.7);}}
-
-/* ======= GUÍA VISUAL HEMIANOPSIA ======= */
 .guia-visual{
   position:absolute;top:0;left:0;width:8px;height:100%;
   background:linear-gradient(180deg,var(--acento),var(--primario));
@@ -214,7 +193,6 @@ input:checked + .slider::before{transform:translateX(24px);}
   text-align:center;box-shadow:var(--sombra);z-index:11;
   animation:aparecer .4s ease;
 }
-
 .modal{
   position:fixed;inset:0;display:none;align-items:center;justify-content:center;
   background:rgba(40,50,60,.45);padding:20px;z-index:50;
@@ -232,18 +210,14 @@ input:checked + .slider::before{transform:translateX(24px);}
 }
 .resumen-mensaje{font-size:1.12rem;font-weight:700;color:var(--verde-texto);margin-bottom:6px;}
 .modal-botones{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
-
-/* Modal CIMT */
 .pregunta-cimt{
   display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;
 }
 .pregunta-cimt .btn{flex:1;min-width:140px;}
 .btn-izq-confirm{background:var(--primario);color:#fff;}
 .btn-der-confirm{background:var(--tarjeta);color:var(--texto);border:3px solid var(--borde);}
-/* Botón CIMT a la IZQUIERDA para forzar cruce de línea media */
 .cimt-izq{justify-content:flex-start;}
 .cimt-izq .btn-izq-confirm{order:2;}
-
 #toast{
   position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
   background:var(--texto);color:var(--fondo-suave);padding:14px 26px;border-radius:99px;
@@ -251,10 +225,7 @@ input:checked + .slider::before{transform:translateX(24px);}
 }
 #toast.visible{opacity:1;transform:translateX(-50%);}
 #toast[data-tipo="exito"]{background:var(--exito);color:#fff;}
-
 #canvas-confetti{position:fixed;inset:0;pointer-events:none;z-index:100;}
-
-/* Mascota */
 .mascota-contenedor{
   position:fixed;bottom:20px;right:20px;z-index:45;
   display:flex;flex-direction:column;align-items:flex-end;gap:10px;
@@ -276,8 +247,6 @@ input:checked + .slider::before{transform:translateX(24px);}
   0%,100%{box-shadow:var(--sombra),0 0 0 0 rgba(79,179,165,.3);}
   50%{box-shadow:var(--sombra),0 0 0 12px rgba(79,179,165,0);}
 }
-
-/* Progreso */
 .progreso-card{
   background:var(--tarjeta);border-radius:16px;padding:20px;
   border:2px solid var(--borde);box-shadow:var(--sombra);margin-top:16px;
@@ -296,25 +265,19 @@ input:checked + .slider::before{transform:translateX(24px);}
 }
 .lado-barra-label{font-size:.9rem;font-weight:700;}
 .lado-barra-valor{font-size:.85rem;color:var(--texto-suave);}
-
 .sesiones-lista{max-height:400px;overflow-y:auto;}
 .sesion-item{
   background:var(--fondo-suave);border-radius:10px;padding:12px;margin-bottom:8px;
   border-left:4px solid var(--primario);
 }
-
 .toggle-sonido{
   display:inline-flex;align-items:center;justify-content:center;
   min-width:54px;min-height:54px;border-radius:14px;
   background:var(--tarjeta);border:3px solid var(--borde);font-size:1.3rem;
 }
 .toggle-sonido.activo{background:var(--exito-suave);border-color:var(--exito);}
-
-/* Modo Enfoque: oculta elementos distractores */
 body.modo-enfoque .mascota-contenedor{display:none;}
 body.modo-enfoque .feedback{font-size:1.3rem;}
-
-/* Upload fotos */
 .upload-fotos{margin-top:14px;}
 .galeria-fotos{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:10px;margin-top:12px;}
 .foto-item{
@@ -328,7 +291,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
   font-size:.8rem;display:flex;align-items:center;justify-content:center;
   min-height:auto;padding:0;
 }
-
 @media (max-width:520px){
   html{font-size:18px;}
   .pantalla{padding:16px 12px 60px;}
@@ -351,12 +313,11 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
 </header>
 
 <main>
-  <!-- INICIO -->
   <section id="pantalla-inicio" class="pantalla activa">
     <div class="inicio-hero">
       <div class="hero-emojis">🧠✋👀</div>
       <h1>Rehabilitación Cognitiva</h1>
-      <p class="subtitulo">Para Luciano · ACV hemisferio derecho</p>
+      <p class="subtitulo">Para Oscar · ACV hemisferio derecho</p>
     </div>
 
     <div class="tarjeta">
@@ -364,7 +325,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
       <p style="font-size:.95rem;color:var(--texto-suave);margin-bottom:12px;">Activá las adaptaciones según indicación del kinesiólogo.</p>
 
       <div class="opciones-terapeuticas">
-        <!-- 1. Modo Hemianopsia -->
         <label class="opcion-terap" id="opt-hemianopsia">
           <span class="opcion-emoji">👁️‍🗨️</span>
           <div class="opcion-info">
@@ -374,7 +334,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
           <div class="switch"><input type="checkbox" id="sw-hemianopsia"><span class="slider"></span></div>
         </label>
 
-        <!-- 2. CIMT -->
         <label class="opcion-terap" id="opt-cimt">
           <span class="opcion-emoji">✋</span>
           <div class="opcion-info">
@@ -384,7 +343,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
           <div class="switch"><input type="checkbox" id="sw-cimt"><span class="slider"></span></div>
         </label>
 
-        <!-- 3. Saliencia (fotos) -->
         <label class="opcion-terap" id="opt-saliencia">
           <span class="opcion-emoji">📸</span>
           <div class="opcion-info">
@@ -394,7 +352,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
           <div class="switch"><input type="checkbox" id="sw-saliencia"><span class="slider"></span></div>
         </label>
 
-        <!-- 4. Multisensorial -->
         <label class="opcion-terap" id="opt-multi">
           <span class="opcion-emoji">🔊</span>
           <div class="opcion-info">
@@ -404,7 +361,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
           <div class="switch"><input type="checkbox" id="sw-multi" checked><span class="slider"></span></div>
         </label>
 
-        <!-- 5. Modo Enfoque -->
         <label class="opcion-terap" id="opt-enfoque">
           <span class="opcion-emoji">🎯</span>
           <div class="opcion-info">
@@ -415,7 +371,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
         </label>
       </div>
 
-      <!-- Carga de fotos para saliency -->
       <div id="upload-container" class="upload-fotos oculto">
         <input type="file" id="input-fotos" accept="image/*" multiple style="display:none;">
         <button id="btn-subir-fotos" class="btn btn-secundario">📸 Subir fotos familiares</button>
@@ -442,7 +397,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
     </div>
   </section>
 
-  <!-- MENÚ -->
   <section id="pantalla-menu" class="pantalla">
     <h1 class="titulo-pantalla">Elegí un juego 😊</h1>
     <div class="menu-juegos">
@@ -467,7 +421,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
     </div>
   </section>
 
-  <!-- MEMORIA -->
   <section id="pantalla-memoria" class="pantalla">
     <p class="descripcion">Tocá las cartas y encontrá las parejas 🌸</p>
     <div class="fila-controles">
@@ -489,7 +442,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
     </div>
   </section>
 
-  <!-- ATENCIÓN -->
   <section id="pantalla-atencion" class="pantalla">
     <p class="descripcion">Tocá el objeto diferente 👀</p>
     <div class="fila-controles">
@@ -514,7 +466,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
     </div>
   </section>
 
-  <!-- COORDINACIÓN -->
   <section id="pantalla-coordinacion" class="pantalla">
     <p class="descripcion">Tocá las estrellas cuando aparezcan ✋</p>
     <div class="fila-controles">
@@ -537,9 +488,8 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
     </div>
   </section>
 
-  <!-- PROGRESO -->
   <section id="pantalla-progreso" class="pantalla">
-    <h1 class="titulo-pantalla">📊 Progreso de Luciano</h1>
+    <h1 class="titulo-pantalla">📊 Progreso de Oscar</h1>
 
     <div class="progreso-card">
       <h3>👁️ Tiempo de reacción por lado</h3>
@@ -564,7 +514,6 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
   </section>
 </main>
 
-<!-- MODALES -->
 <div id="modal-resumen" class="modal">
   <div class="modal-caja">
     <h2 id="resumen-titulo"></h2>
@@ -603,17 +552,9 @@ body.modo-enfoque .feedback{font-size:1.3rem;}
 const $ = (s,c=document) => c.querySelector(s);
 const $$ = (s,c=document) => Array.from(c.querySelectorAll(s));
 
-/* ============================================================
-   CONFIGURACIÓN TERAPÉUTICA GLOBAL
-============================================================ */
 const Terapia = {
-  hemianopsia: false,
-  cimt: false,
-  saliencia: false,
-  multi: true,
-  enfoque: false,
-  fotos: [], // base64
-
+  hemianopsia: false, cimt: false, saliencia: false, multi: true, enfoque: false,
+  fotos: [],
   guardar(){
     try{
       localStorage.setItem("rc-terapia", JSON.stringify({
@@ -653,7 +594,7 @@ const Terapia = {
     this.fotos.forEach((src, i) => {
       const div = document.createElement("div");
       div.className = "foto-item";
-      div.innerHTML = `<img src="${src}" alt="Foto ${i+1}"><button class="btn-borrar" data-i="${i}">×</button>`;
+      div.innerHTML = '<img src="' + src + '" alt="Foto ' + (i+1) + '"><button class="btn-borrar" data-i="' + i + '">×</button>';
       gal.appendChild(div);
     });
     $$(".btn-borrar", gal).forEach(b => {
@@ -666,19 +607,15 @@ const Terapia = {
   }
 };
 
-/* ============================================================
-   AUDIO + VOZ + VIBRACIÓN
-============================================================ */
 const Sonido = {
   ctx:null, habilitado:true, voz:null,
   inicializar(){
     if(this.ctx) return;
     try{ this.ctx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){}
-    if(!this.voz && "speechSynthesis" in window){
-      this.voz = window.speechSynthesis;
-    }
+    if(!this.voz && "speechSynthesis" in window){ this.voz = window.speechSynthesis; }
   },
-  tono(freq, dur, tipo="sine", vol=0.12){
+  tono(freq, dur, tipo, vol){
+    tipo = tipo || "sine"; vol = vol || 0.12;
     if(!this.habilitado || !this.ctx) return;
     try{
       if(this.ctx.state==="suspended") this.ctx.resume();
@@ -695,7 +632,7 @@ const Sonido = {
     this.inicializar();
     this.tono(523,.12); setTimeout(()=>this.tono(659,.18),90); setTimeout(()=>this.tono(784,.25),180);
     if(Terapia.multi && this.voz){
-      const u = new SpeechSynthesisUtterance(aleatoria(["¡Muy bien Luciano!","¡Excelente!","¡Bravo!","¡Sigue así!"]));
+      const u = new SpeechSynthesisUtterance(aleatoria(["¡Muy bien Oscar!","¡Excelente!","¡Bravo!","¡Sigue así!"]));
       u.lang = "es-AR"; u.rate = 0.9; u.pitch = 1.1;
       this.voz.cancel(); this.voz.speak(u);
     }
@@ -705,9 +642,10 @@ const Sonido = {
   click(){ this.inicializar(); this.tono(800,.05,"sine",0.06); },
   nivel(){
     this.inicializar();
-    [523,659,784,1047].forEach((n,i)=>setTimeout(()=>this.tono(n,.2,"triangle"),i*120));
+    const notas = [523,659,784,1047];
+    notas.forEach((n,i)=>setTimeout(()=>this.tono(n,.2,"triangle"),i*120));
     if(Terapia.multi && this.voz){
-      const u = new SpeechSynthesisUtterance("¡Felicitaciones Luciano, terminaste el nivel!");
+      const u = new SpeechSynthesisUtterance("¡Felicitaciones Oscar, terminaste el nivel!");
       u.lang="es-AR"; u.rate=0.9;
       this.voz.cancel(); this.voz.speak(u);
     }
@@ -715,9 +653,6 @@ const Sonido = {
   }
 };
 
-/* ============================================================
-   CONFETTI
-============================================================ */
 const Confetti = {
   canvas:null, ctx:null, part:[], activo:false,
   colores:["#F5A05A","#4FB3A5","#63BE7F","#F6A96A","#7FB8E6"],
@@ -757,18 +692,16 @@ const Confetti = {
   }
 };
 
-/* ============================================================
-   SESIONES (con registro de lado izq/der)
-============================================================ */
 const Sesiones = {
   clave:"rc-sesiones-v2", inicio:null,
   iniciar(){ this.inicio = Date.now(); },
-  registrar({juego,nivel,puntaje,exitoso,stats,tiempoIzq,tiempoDer}){
+  registrar(datos){
     if(!this.inicio) return;
     const sesion = {
-      fecha:new Date().toISOString(), juego, nivel, puntaje, exitoso,
+      fecha:new Date().toISOString(),
+      juego:datos.juego, nivel:datos.nivel, puntaje:datos.puntaje, exitoso:datos.exitoso,
       duracion:Math.round((Date.now()-this.inicio)/1000),
-      stats, tiempoIzq:tiempoIzq||null, tiempoDer:tiempoDer||null
+      stats:datos.stats, tiempoIzq:datos.tiempoIzq||null, tiempoDer:datos.tiempoDer||null
     };
     try{
       const s = JSON.parse(localStorage.getItem(this.clave)||"[]");
@@ -785,47 +718,47 @@ const Sesiones = {
     const tiemposDer = s.filter(x=>x.tiempoDer).map(x=>x.tiempoDer);
     const promIzq = tiemposIzq.length ? Math.round(tiemposIzq.reduce((a,b)=>a+b,0)/tiemposIzq.length) : 0;
     const promDer = tiemposDer.length ? Math.round(tiemposDer.reduce((a,b)=>a+b,0)/tiemposDer.length) : 0;
-    let t = `REPORTE NEUROREHABILITACIÓN\nPaciente: Luciano Oscar Enrique\nGenerado: ${new Date().toLocaleString("es-AR")}\n\n`;
-    t += `RESUMEN EJECUTIVO\n${"=".repeat(40)}\n`;
-    t += `Total sesiones: ${s.length}\nCompletadas: ${s.filter(x=>x.exitoso).length}\n\n`;
-    t += `ANÁLISIS CAMPO VISUAL (Coordinación)\n${"=".repeat(40)}\n`;
-    t += `Tiempo reacción IZQUIERDO (afectado): ${promIzq} ms (n=${tiemposIzq.length})\n`;
-    t += `Tiempo reacción DERECHO: ${promDer} ms (n=${tiemposDer.length})\n`;
-    t += `Diferencia: ${promIzq-promDer>0?"+":""}${promIzq-promDer} ms\n\n`;
-    t += `ADAPTACIONES ACTIVAS\n${"=".repeat(40)}\n`;
-    t += `Modo Hemianopsia: ${Terapia.hemianopsia?"Sí":"No"}\n`;
-    t += `CIMT (mano izq): ${Terapia.cimt?"Sí":"No"}\n`;
-    t += `Saliencia (fotos): ${Terapia.saliencia?"Sí":"No"}\n`;
-    t += `Multisensorial: ${Terapia.multi?"Sí":"No"}\n\n`;
-    t += `HISTORIAL\n${"=".repeat(40)}\n`;
+    let t = "REPORTE NEUROREHABILITACIÓN\n";
+    t += "Paciente: Oscar Enrique\n";
+    t += "Generado: " + new Date().toLocaleString("es-AR") + "\n\n";
+    t += "RESUMEN EJECUTIVO\n" + "=".repeat(40) + "\n";
+    t += "Total sesiones: " + s.length + "\nCompletadas: " + s.filter(x=>x.exitoso).length + "\n\n";
+    t += "ANÁLISIS CAMPO VISUAL (Coordinación)\n" + "=".repeat(40) + "\n";
+    t += "Tiempo reacción IZQUIERDO (afectado): " + promIzq + " ms (n=" + tiemposIzq.length + ")\n";
+    t += "Tiempo reacción DERECHO: " + promDer + " ms (n=" + tiemposDer.length + ")\n";
+    t += "Diferencia: " + (promIzq-promDer>0?"+":"") + (promIzq-promDer) + " ms\n\n";
+    t += "ADAPTACIONES ACTIVAS\n" + "=".repeat(40) + "\n";
+    t += "Modo Hemianopsia: " + (Terapia.hemianopsia?"Sí":"No") + "\n";
+    t += "CIMT (mano izq): " + (Terapia.cimt?"Sí":"No") + "\n";
+    t += "Saliencia (fotos): " + (Terapia.saliencia?"Sí":"No") + "\n";
+    t += "Multisensorial: " + (Terapia.multi?"Sí":"No") + "\n\n";
+    t += "HISTORIAL\n" + "=".repeat(40) + "\n";
     s.slice().reverse().forEach((x,i)=>{
       const f = new Date(x.fecha).toLocaleString("es-AR");
-      t += `\n[${s.length-i}] ${f} - ${x.juego} (${x.nivel})\n`;
-      t += `  Puntaje: ${x.puntaje} · Duración: ${x.duracion}s · ${x.exitoso?"✅":"⚠️"}\n`;
-      if(x.tiempoIzq||x.tiempoDer) t += `  T.Izq: ${x.tiempoIzq||"—"} ms · T.Der: ${x.tiempoDer||"—"} ms\n`;
+      t += "\n[" + (s.length-i) + "] " + f + " - " + x.juego + " (" + x.nivel + ")\n";
+      t += "  Puntaje: " + x.puntaje + " · Duración: " + x.duracion + "s · " + (x.exitoso?"✅":"⚠️") + "\n";
+      if(x.tiempoIzq||x.tiempoDer) t += "  T.Izq: " + (x.tiempoIzq||"—") + " ms · T.Der: " + (x.tiempoDer||"—") + " ms\n";
     });
     return t;
   }
 };
 
-/* ============================================================
-   UTILIDADES
-============================================================ */
 const FRASES = {
   animo:["¡Muy bien!","¡Excelente!","¡Qué gran trabajo!","¡Seguí así!","¡Muy bueno!"],
   retry:["¡Casi!","Probá de nuevo","Tranquilidad","¡Vos podés!"],
   final:["¡Felicitaciones!","Cada ejercicio ayuda a tu cerebro","¡Muy buen esfuerzo!"]
 };
 const aleatoria = l => l[Math.floor(Math.random()*l.length)];
-function mezclar(a){ a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function mezclar(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;} return a; }
 function mmss(s){ return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); }
 
 let _toastT;
-function toast(t,tipo=""){ const el=$("#toast"); el.textContent=t; el.dataset.tipo=tipo; el.classList.add("visible"); clearTimeout(_toastT); _toastT=setTimeout(()=>el.classList.remove("visible"),2400); }
+function toast(t,tipo){
+  const el=$("#toast"); el.textContent=t; el.dataset.tipo=tipo||"";
+  el.classList.add("visible"); clearTimeout(_toastT);
+  _toastT=setTimeout(()=>el.classList.remove("visible"),2400);
+}
 
-/* ============================================================
-   ESTADO Y NAVEGACIÓN
-============================================================ */
 const Estado = { dificultad:"facil", juegoActivo:null, enPausa:false, terminado:false };
 const NIVELES=["facil","medio","dificil"];
 const TITULOS={memoria:"🧠 Memoria",atencion:"👀 Atención",coordinacion:"✋ Coordinación"};
@@ -876,32 +809,29 @@ function sincronizarSelector(j,d){
 const abrirModal = id => $("#"+id).classList.add("visible");
 const cerrarModal = id => $("#"+id).classList.remove("visible");
 
-function mostrarResumen({titulo,stats,mensaje,juego,nivel,exitoso,puntaje,tiempoIzq,tiempoDer}){
+function mostrarResumen(datos){
   Estado.terminado=true;
-  $("#resumen-titulo").textContent=titulo;
+  $("#resumen-titulo").textContent=datos.titulo;
   const c=$("#resumen-stats"); c.innerHTML="";
-  stats.forEach(e=>{
+  datos.stats.forEach(e=>{
     const f=document.createElement("div"); f.className="res-stat";
     const et=document.createElement("span"); et.textContent=e.etiqueta;
     const v=document.createElement("strong"); v.textContent=e.valor;
     f.append(et,v); c.appendChild(f);
   });
-  $("#resumen-mensaje").textContent=mensaje;
-  const sig=sigNivel(nivel);
+  $("#resumen-mensaje").textContent=datos.mensaje;
+  const sig=sigNivel(datos.nivel);
   $("#btn-resumen-siguiente").style.display=sig?"":"none";
 
-  // CIMT: pregunta si usó la mano izquierda (botón a la izquierda para cruce línea media)
   const contCIMT = $("#contenedor-cimt");
   contCIMT.innerHTML = "";
   let bonusCIMT = 0;
-  if(Terapia.cimt && exitoso){
+  if(Terapia.cimt && datos.exitoso){
     const div = document.createElement("div");
     div.className = "pregunta-cimt cimt-izq";
-    div.innerHTML = `
-      <p style="width:100%;font-weight:600;margin-bottom:8px;">¿Usaste la mano izquierda? ✋</p>
-      <button class="btn btn-izq-confirm">✋ Sí, mano izq (+20)</button>
-      <button class="btn btn-der-confirm">👉 No, usé la otra</button>
-    `;
+    div.innerHTML = '<p style="width:100%;font-weight:600;margin-bottom:8px;">¿Usaste la mano izquierda? ✋</p>' +
+      '<button class="btn btn-izq-confirm">✋ Sí, mano izq (+20)</button>' +
+      '<button class="btn btn-der-confirm">👉 No, usé la otra</button>';
     contCIMT.appendChild(div);
     const btnIzq = div.querySelector(".btn-izq-confirm");
     const btnDer = div.querySelector(".btn-der-confirm");
@@ -917,20 +847,26 @@ function mostrarResumen({titulo,stats,mensaje,juego,nivel,exitoso,puntaje,tiempo
     });
   }
 
-  $("#btn-resumen-repetir").onclick=()=>{cerrarModal("modal-resumen");Estado.terminado=false;Sesiones.iniciar();Juegos[juego].comenzar(nivel);};
+  $("#btn-resumen-repetir").onclick=()=>{cerrarModal("modal-resumen");Estado.terminado=false;Sesiones.iniciar();Juegos[datos.juego].comenzar(datos.nivel);};
   $("#btn-resumen-siguiente").onclick=()=>{
     cerrarModal("modal-resumen");Estado.terminado=false;
-    Estado.dificultad=sig; sincronizarSelector(juego,sig);
-    Sesiones.iniciar(); Juegos[juego].comenzar(sig);
+    Estado.dificultad=sig; sincronizarSelector(datos.juego,sig);
+    Sesiones.iniciar(); Juegos[datos.juego].comenzar(sig);
   };
   $("#btn-resumen-menu").onclick=()=>{
     cerrarModal("modal-resumen"); mostrarPantalla("menu");
   };
 
-  Sesiones.registrar({juego,nivel,puntaje:puntaje+bonusCIMT,exitoso,stats:stats.reduce((a,s)=>{a[s.etiqueta]=s.valor;return a;},{}),tiempoIzq,tiempoDer});
+  const statsObj = {};
+  datos.stats.forEach(s => { statsObj[s.etiqueta] = s.valor; });
+  Sesiones.registrar({
+    juego:datos.juego, nivel:datos.nivel,
+    puntaje:datos.puntaje+bonusCIMT, exitoso:datos.exitoso,
+    stats:statsObj, tiempoIzq:datos.tiempoIzq, tiempoDer:datos.tiempoDer
+  });
 
   abrirModal("modal-resumen");
-  if(exitoso){ Sonido.nivel(); Confetti.explotar(); } else { Sonido.click(); }
+  if(datos.exitoso){ Sonido.nivel(); Confetti.explotar(); } else { Sonido.click(); }
 }
 
 function alternarPausa(){
@@ -960,9 +896,6 @@ function alternarSonido(){
   if(Sonido.habilitado){ Sonido.inicializar(); Sonido.click(); }
 }
 
-/* ============================================================
-   GUÍA VISUAL HEMIANOPSIA (barrido izq → der)
-============================================================ */
 function guiaVisual(container){
   return new Promise(resolve => {
     if(!Terapia.hemianopsia){ resolve(); return; }
@@ -985,9 +918,6 @@ function guiaVisual(container){
   });
 }
 
-/* ============================================================
-   MEMORIA (con soporte de fotos)
-============================================================ */
 const Memoria = {
   emojis:["🍎","🍌","🍇","🍓","🍊","🥝","🍉","🌻"],
   config:{facil:{pares:4},medio:{pares:6},dificil:{pares:8}},
@@ -997,29 +927,34 @@ const Memoria = {
   async comenzar(n){
     this.nivel=n||this.nivel; this.sesion++;
     Estado.terminado=false;
-    clearInterval(this.timer);
+    clearInterval(this.timer); this.timer=null;
     this.primera=null; this.bloqueada=false;
     this.intentos=0; this.aciertos=0; this.segundos=0;
     $("#memoria-intentos").textContent="0";
     $("#memoria-tiempo").textContent="00:00";
     this.feedback("Encontrá las parejas 🌸");
-    const zona = $("#tablero-memoria").parentElement;
-    await guiaVisual(zona);
+    await guiaVisual($("#tablero-memoria").parentElement);
     this.construir();
   },
 
   construir(){
     const pares=this.config[this.nivel].pares;
     const usarFotos = Terapia.saliencia && Terapia.fotos.length >= pares;
-    const pool = usarFotos ? mezclar(Terapia.fotos).slice(0,pares).map((f,i)=>({tipo:"foto",src:f,id:i}))
-                           : mezclar(this.emojis).slice(0,pares).map((e,i)=>({tipo:"emoji",src:e,id:i}));
-    const mazo = mezclar([...pool,...pool]);
+    let pool;
+    if(usarFotos){
+      pool = mezclar(Terapia.fotos).slice(0,pares).map((f,i)=>({tipo:"foto",src:f,id:i}));
+    } else {
+      pool = mezclar(this.emojis).slice(0,pares).map((e,i)=>({tipo:"emoji",src:e,id:i}));
+    }
+    const mazo = mezclar(pool.concat(pool));
     const tab=$("#tablero-memoria"); tab.innerHTML="";
     mazo.forEach(v=>{
       const b=document.createElement("button");
       b.className="carta"; b.dataset.id=v.id;
-      const frente = v.tipo==="foto" ? `<img src="${v.src}" alt="Foto">` : v.src;
-      b.innerHTML=`<div class="carta-interna"><div class="cara cara-atras">?</div><div class="cara cara-frente">${frente}</div></div>`;
+      let frente;
+      if(v.tipo==="foto"){ frente = '<img src="' + v.src + '" alt="Foto">'; }
+      else { frente = v.src; }
+      b.innerHTML='<div class="carta-interna"><div class="cara cara-atras">?</div><div class="cara cara-frente">' + frente + '</div></div>';
       b.addEventListener("click",()=>this.voltear(b));
       tab.appendChild(b);
     });
@@ -1072,13 +1007,10 @@ const Memoria = {
     });
   },
   pausar(){ clearInterval(this.timer); this.timer=null; },
-  reanudar(){ if(this.aciertos>0&&!Estado.terminado) this.timer=setInterval(()=>this.tick(),1000); },
+  reanudar(){ if(this.aciertos>0&&!Estado.terminado&&!this.timer) this.timer=setInterval(()=>this.tick(),1000); },
   detener(){ this.sesion++; clearInterval(this.timer); this.timer=null; }
 };
 
-/* ============================================================
-   ATENCIÓN
-============================================================ */
 const Atencion = {
   config:{
     facil:{cols:3,tiempo:0,rondas:6,pares:[["🐶","🐟"],["🌞","🌙"],["🍎","🍌"],["⚽","🎈"],["🚗","🌸"],["🍕","☂️"]]},
@@ -1093,6 +1025,7 @@ const Atencion = {
     this.nivel=n||this.nivel; this.sesion++;
     Estado.terminado=false;
     clearInterval(this.timerT); clearInterval(this.timerR);
+    this.timerT=null; this.timerR=null;
     this.ronda=0; this.aciertos=0; this.errores=0; this.tiempoTotal=0;
     $("#atencion-tiempo").textContent="00:00"; $("#atencion-ronda").textContent="—";
     this.feedback("Encontrá el diferente 👀");
@@ -1107,18 +1040,17 @@ const Atencion = {
     if(this.ronda>cfg.rondas){ this.finalizar(); return; }
     $("#atencion-ronda").textContent=this.ronda+"/"+cfg.rondas;
     this.resuelta=false;
-    const [base,dist]=aleatoria(cfg.pares);
+    const par=aleatoria(cfg.pares);
+    const base=par[0], dist=par[1];
     const total=cfg.cols*cfg.cols;
-    // Sesgo hemianopsia: poner el diferente más a la izquierda
     let pos;
     if(Terapia.hemianopsia && Math.random()<0.7){
-      // 70% en lado izquierdo
-      pos = Math.floor(Math.random()*(total/2));
+      pos = Math.floor(Math.random()*(Math.floor(total/2)));
     } else {
       pos = Math.floor(Math.random()*total);
     }
     const tab=$("#tablero-atencion");
-    tab.style.gridTemplateColumns=`repeat(${cfg.cols},1fr)`;
+    tab.style.gridTemplateColumns="repeat("+cfg.cols+",1fr)";
     tab.innerHTML="";
     for(let i=0;i<total;i++){
       const es=i===pos;
@@ -1128,14 +1060,14 @@ const Atencion = {
       b.addEventListener("click",()=>this.elegir(b));
       tab.appendChild(b);
     }
-    clearInterval(this.timerR);
+    clearInterval(this.timerR); this.timerR=null;
     const bar=$("#atencion-barra-fill");
     if(cfg.tiempo>0){
       $("#atencion-barra").style.visibility="visible";
       this.restante=cfg.tiempo*1000; bar.style.width="100%";
       this.timerR=setInterval(()=>{
         this.restante-=100; bar.style.width=Math.max(0,this.restante/(cfg.tiempo*10))+"%";
-        if(this.restante<=0){clearInterval(this.timerR);this.seAcabo();}
+        if(this.restante<=0){clearInterval(this.timerR);this.timerR=null;this.seAcabo();}
       },100);
     }else{ $("#atencion-barra").style.visibility="hidden"; }
   },
@@ -1143,7 +1075,7 @@ const Atencion = {
   elegir(c){
     if(Estado.enPausa||this.resuelta) return;
     if(c.dataset.dist==="1"){
-      this.resuelta=true; clearInterval(this.timerR);
+      this.resuelta=true; clearInterval(this.timerR); this.timerR=null;
       this.aciertos++; Sonido.acierto();
       c.classList.add("correcta");
       this.feedback(aleatoria(FRASES.animo),"exito");
@@ -1169,6 +1101,7 @@ const Atencion = {
   feedback(t,c){ const f=$("#atencion-feedback"); f.textContent=t; f.className="feedback"+(c==="exito"?" fb-exito":""); },
   finalizar(){
     clearInterval(this.timerT); clearInterval(this.timerR);
+    this.timerT=null; this.timerR=null;
     const cfg=this.config[this.nivel];
     const prec=Math.round(this.aciertos/cfg.rondas*100);
     const pts=Math.max(0,this.aciertos*100-this.errores*10);
@@ -1181,14 +1114,11 @@ const Atencion = {
   },
   pausar(){clearInterval(this.timerT);clearInterval(this.timerR);this.timerT=null;this.timerR=null;},
   reanudar(){
-    this.timerT=setInterval(()=>{this.tiempoTotal++;$("#atencion-tiempo").textContent=mmss(this.tiempoTotal);},1000);
+    if(!this.timerT) this.timerT=setInterval(()=>{this.tiempoTotal++;$("#atencion-tiempo").textContent=mmss(this.tiempoTotal);},1000);
   },
   detener(){this.sesion++;clearInterval(this.timerT);clearInterval(this.timerR);this.timerT=null;this.timerR=null;}
 };
 
-/* ============================================================
-   COORDINACIÓN (con registro izq/der)
-============================================================ */
 const Coordinacion = {
   config:{
     facil:{total:12,vida:2600,tam:100,maxSim:1,intervalo:1500},
@@ -1226,15 +1156,14 @@ const Coordinacion = {
     const zona=$("#zona-coord");
     const w=zona.clientWidth, h=zona.clientHeight, tam=cfg.tam;
     let x,y,intentos=0;
-    // HEMIANOPSIA: 70% de los estímulos en el lado IZQUIERDO
     do{
-      const irA_Izq = Terapia.hemianopsia && Math.random()<0.7;
-      if(irA_Izq){
-        x = 10 + Math.random() * ((w/2) - tam - 10);
+      const irAIzq = Terapia.hemianopsia && Math.random()<0.7;
+      if(irAIzq){
+        x = 10 + Math.random() * Math.max(10, (w/2) - tam - 10);
       } else {
-        x = 10 + Math.random() * (w - tam - 20);
+        x = 10 + Math.random() * Math.max(10, w - tam - 20);
       }
-      y = 10 + Math.random() * (h - tam - 20);
+      y = 10 + Math.random() * Math.max(10, h - tam - 20);
       intentos++;
     }while(intentos<25 && this.solapa(x,y,tam));
     const el=document.createElement("button");
@@ -1242,7 +1171,6 @@ const Coordinacion = {
     el.style.width=tam+"px"; el.style.height=tam+"px";
     el.style.left=x+"px"; el.style.top=y+"px";
     el.textContent="🌟";
-    // Guardar lado
     el.dataset.lado = (x + tam/2) < w/2 ? "izq" : "der";
     el.dataset.nacido=performance.now();
     zona.appendChild(el);
@@ -1263,7 +1191,6 @@ const Coordinacion = {
     if(Estado.enPausa) return;
     clearTimeout(el._to);
     const t=Math.round(performance.now()-Number(el.dataset.nacido));
-    // Registrar en lado correspondiente
     if(el.dataset.lado==="izq") this.tiemposIzq.push(t);
     else this.tiemposDer.push(t);
     this.aciertos++; this.activos--;
@@ -1329,8 +1256,8 @@ const Coordinacion = {
     }
     mostrarResumen({
       titulo:exitoso?"¡Nivel completado!":"Fin 🙂",
-      stats, mensaje:aleatoria(FRASES.final), juego:"coordinacion",
-      nivel:this.nivel, exitoso, puntaje:pts, tiempoIzq:promI, tiempoDer:promD
+      stats:stats, mensaje:aleatoria(FRASES.final), juego:"coordinacion",
+      nivel:this.nivel, exitoso:exitoso, puntaje:pts, tiempoIzq:promI, tiempoDer:promD
     });
   },
 
@@ -1347,51 +1274,44 @@ const Coordinacion = {
 
 const Juegos={memoria:Memoria,atencion:Atencion,coordinacion:Coordinacion};
 
-/* ============================================================
-   PROGRESO
-============================================================ */
 function mostrarProgreso(){
   const s = Sesiones.obtener();
   const total=s.length;
   const completadas=s.filter(x=>x.exitoso).length;
   const ptsTotal=s.reduce((a,x)=>a+(x.puntaje||0),0);
   const mejor=s.reduce((m,x)=>Math.max(m,x.puntaje||0),0);
-  $("#resumen-general").innerHTML=`
-    <div class="res-stat"><span>Total sesiones</span><strong>${total}</strong></div>
-    <div class="res-stat"><span>Completadas</span><strong>${completadas}</strong></div>
-    <div class="res-stat"><span>Puntaje total</span><strong>${ptsTotal}</strong></div>
-    <div class="res-stat"><span>Mejor puntaje</span><strong>${mejor}</strong></div>
-  `;
+  $("#resumen-general").innerHTML=
+    '<div class="res-stat"><span>Total sesiones</span><strong>'+total+'</strong></div>'+
+    '<div class="res-stat"><span>Completadas</span><strong>'+completadas+'</strong></div>'+
+    '<div class="res-stat"><span>Puntaje total</span><strong>'+ptsTotal+'</strong></div>'+
+    '<div class="res-stat"><span>Mejor puntaje</span><strong>'+mejor+'</strong></div>';
 
-  // Gráfico de lados
   const coord = s.filter(x=>x.juego==="coordinacion" && x.tiempoIzq);
-  const promI = coord.length ? Math.round(coord.reduce((a,x)=>a+x.tiempoIzq,0)/coord.length) : 0;
-  const promD = coord.filter(x=>x.tiempoDer).reduce((a,x)=>a+x.tiempoDer,0) / Math.max(1,coord.filter(x=>x.tiempoDer).length);
+  let promI = 0, promD = 0;
+  if(coord.length){
+    promI = Math.round(coord.reduce((a,x)=>a+x.tiempoIzq,0)/coord.length);
+    const conDer = coord.filter(x=>x.tiempoDer);
+    if(conDer.length) promD = Math.round(conDer.reduce((a,x)=>a+x.tiempoDer,0)/conDer.length);
+  }
   const max = Math.max(promI,promD,500);
-  $("#grafico-lados").innerHTML = `
-    <div class="lado-barra">
-      <div class="lado-barra-valor">${promI||"—"} ms</div>
-      <div class="lado-barra-fill" style="height:${promI?(promI/max*100):5}%;background:var(--acento)"></div>
-      <div class="lado-barra-label">⬅️ Izquierdo</div>
-    </div>
-    <div class="lado-barra">
-      <div class="lado-barra-valor">${promD?Math.round(promD)+" ms":"—"}</div>
-      <div class="lado-barra-fill" style="height:${promD?(promD/max*100):5}%"></div>
-      <div class="lado-barra-label">➡️ Derecho</div>
-    </div>
-  `;
+  $("#grafico-lados").innerHTML =
+    '<div class="lado-barra"><div class="lado-barra-valor">'+(promI||"—")+' ms</div>'+
+    '<div class="lado-barra-fill" style="height:'+(promI?(promI/max*100):5)+'%;background:var(--acento)"></div>'+
+    '<div class="lado-barra-label">⬅️ Izquierdo</div></div>'+
+    '<div class="lado-barra"><div class="lado-barra-valor">'+(promD?promD+" ms":"—")+'</div>'+
+    '<div class="lado-barra-fill" style="height:'+(promD?(promD/max*100):5)+'%"></div>'+
+    '<div class="lado-barra-label">➡️ Derecho</div></div>';
 
-  // Lista sesiones
   const lista = $("#sesiones-lista");
-  if(s.length===0){ lista.innerHTML='<p class="vacio" style="padding:20px;text-align:center;color:var(--texto-suave);">Sin sesiones aún 🎮</p>'; return; }
+  if(s.length===0){ lista.innerHTML='<p style="padding:20px;text-align:center;color:var(--texto-suave);">Sin sesiones aún 🎮</p>'; return; }
   lista.innerHTML = s.slice().reverse().map(x=>{
     const f=new Date(x.fecha).toLocaleString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
-    const lados = (x.tiempoIzq||x.tiempoDer) ? `<br><small>⬅️ ${x.tiempoIzq||"—"} ms · ➡️ ${x.tiempoDer||"—"} ms</small>` : "";
-    return `<div class="sesion-item">
-      <div style="font-size:.85rem;color:var(--texto-suave);">${f}</div>
-      <div style="font-weight:700;margin:4px 0;">${x.juego} (${x.nivel}) ${x.exitoso?"✅":"⚠️"}</div>
-      <div style="font-size:.9rem;">⭐ ${x.puntaje} pts · ⏱️ ${x.duracion}s${lados}</div>
-    </div>`;
+    const lados = (x.tiempoIzq||x.tiempoDer) ? '<br><small>⬅️ '+(x.tiempoIzq||"—")+' ms · ➡️ '+(x.tiempoDer||"—")+' ms</small>' : "";
+    return '<div class="sesion-item">'+
+      '<div style="font-size:.85rem;color:var(--texto-suave);">'+f+'</div>'+
+      '<div style="font-weight:700;margin:4px 0;">'+x.juego+' ('+x.nivel+') '+(x.exitoso?"✅":"⚠️")+'</div>'+
+      '<div style="font-size:.9rem;">⭐ '+x.puntaje+' pts · ⏱️ '+x.duracion+'s'+lados+'</div>'+
+    '</div>';
   }).join("");
 }
 
@@ -1400,14 +1320,11 @@ function exportarProgreso(){
   const blob = new Blob([t],{type:"text/plain;charset=utf-8"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href=url; a.download=`luciano-progreso-${new Date().toISOString().split("T")[0]}.txt`;
+  a.href=url; a.download="oscar-progreso-"+new Date().toISOString().split("T")[0]+".txt";
   document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   toast("📄 Archivo descargado","exito");
 }
 
-/* ============================================================
-   MASCOTA
-============================================================ */
 const CONSEJOS=[
   "💧 Tomá agua, ayuda al cerebro.","🫁 Respirá profundo 3 veces.",
   "👀 Mirá bien a la izquierda al caminar.","🤚 Mové los dedos de la mano izquierda.",
@@ -1428,11 +1345,7 @@ function initMascota(){
   document.addEventListener("click",ev=>{if(!ev.target.closest(".mascota-contenedor"))$("#mascota-burbuja").classList.remove("visible");});
 }
 
-/* ============================================================
-   INICIALIZACIÓN
-============================================================ */
 function init(){
-  // Terapia
   Terapia.cargar();
   ["hemianopsia","cimt","saliencia","multi","enfoque"].forEach(k=>{
     const sw=$("#sw-"+k);
@@ -1443,7 +1356,6 @@ function init(){
   });
   Terapia.aplicarUI();
 
-  // Upload fotos
   $("#btn-subir-fotos").addEventListener("click",()=>$("#input-fotos").click());
   $("#input-fotos").addEventListener("change",e=>{
     const files = Array.from(e.target.files);
@@ -1458,20 +1370,17 @@ function init(){
     e.target.value = "";
   });
 
-  // Tema
   let tema="claro"; try{tema=localStorage.getItem("rc-tema")||"claro";}catch(e){}
   document.documentElement.setAttribute("data-theme",tema);
   $$(".btn-tema").forEach(b=>b.textContent=tema==="oscuro"?"☀️ Modo claro":"🌙 Modo oscuro");
   $$(".btn-tema").forEach(b=>b.addEventListener("click",alternarTema));
 
-  // Sonido
   $$("#btn-sonido-inicio,#btn-sonido-menu,#btn-sonido-barra").forEach(b=>{
     if(b) b.addEventListener("click",alternarSonido);
   });
   document.addEventListener("click",()=>Sonido.inicializar(),{once:true});
   document.addEventListener("touchstart",()=>Sonido.inicializar(),{once:true});
 
-  // Inicio
   crearSelector("selector-inicio",Estado.dificultad,d=>Estado.dificultad=d);
   $("#btn-comenzar").addEventListener("click",()=>{Sonido.click();mostrarPantalla("menu");});
   $("#btn-volver-inicio").addEventListener("click",()=>{Sonido.click();mostrarPantalla("inicio");});
