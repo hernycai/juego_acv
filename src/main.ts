@@ -919,7 +919,7 @@ function initMascota(): void {
 // ============ INIT ============
 function init(): void {
   cargarTerapia();
-  (['hemianopsia', 'cimt', 'saliencia', 'multi', 'enfoque'] as (keyof ConfigTerapia)[]).forEach(k => {
+    (['hemianopsia', 'cimt', 'saliencia', 'multi', 'enfoque'] as const).forEach(k => {
     const sw = $<HTMLInputElement>('#sw-' + k);
     sw.addEventListener('change', () => { Terapia[k] = sw.checked; guardarTerapia(); aplicarUITerapia(); Sonido.click(); });
   });
