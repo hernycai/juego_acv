@@ -17,57 +17,36 @@
 </header>
 
 <main>
-  <section id="pantalla-inicio" class="pantalla activa">
-    <div class="inicio-hero">
-      <div class="hero-emojis">🧠✋👀</div>
-      <h1>Rehabilitación Cognitiva</h1>
-      <p class="subtitulo">Para Oscar · ACV hemisferio derecho</p>
+  <!-- ============ MENÚ PRINCIPAL (pantalla inicial) ============ -->
+  <section id="pantalla-menu" class="pantalla activa">
+    <h1 class="titulo-pantalla">Elegí un juego 😊</h1>
+    <div class="menu-juegos">
+      <button id="btn-juego-memoria" class="juego-card jc-memoria"><span class="emoji">🧠</span>Memoria<small>Parejas de cartas</small></button>
+      <button id="btn-juego-atencion" class="juego-card jc-atencion"><span class="emoji">👀</span>Atención<small>Objeto diferente</small></button>
+      <button id="btn-juego-coordinacion" class="juego-card jc-coordinacion"><span class="emoji">✋</span>Coordinación<small>Tocá las estrellas</small></button>
+      <button id="btn-juego-viaje" class="juego-card jc-viaje"><span class="emoji">🚀</span>Viaje a las Estrellas<small>Un toque para saltar</small></button>
+      <button id="btn-juego-palabras" class="juego-card jc-palabras"><span class="emoji">✍️</span>Palabras<small>Escribí la palabra</small></button>
+      <button id="btn-juego-config" class="juego-card jc-config"><span class="emoji">⚙️</span>Configuración<small>Opciones terapéuticas</small></button>
     </div>
+    <div class="acciones">
+      <button id="btn-ver-progreso-menu" class="btn btn-secundario">📊 Progreso</button>
+      <button id="btn-sonido-menu" class="toggle-sonido activo">🔊</button>
+      <button class="btn btn-suave btn-tema">🌙 Modo oscuro</button>
+    </div>
+  </section>
 
+  <!-- ============ CONFIGURACIÓN ============ -->
+  <section id="pantalla-config" class="pantalla">
+    <h1 class="titulo-pantalla">⚙️ Configuración</h1>
     <div class="tarjeta">
-      <h2>⚙️ Opciones Terapéuticas</h2>
+      <h2>Opciones Terapéuticas</h2>
       <p class="nota-opciones">Activá las adaptaciones según indicación del kinesiólogo.</p>
       <div class="opciones-terapeuticas">
-        <label class="opcion-terap" id="opt-hemianopsia">
-          <span class="opcion-emoji">👁️‍🗨️</span>
-          <div class="opcion-info">
-            <div class="opcion-titulo">Modo Hemianopsia</div>
-            <div class="opcion-desc">Estímulos 70% en lado izquierdo + guía visual y avisos</div>
-          </div>
-          <div class="switch"><input type="checkbox" id="sw-hemianopsia"><span class="slider"></span></div>
-        </label>
-        <label class="opcion-terap" id="opt-cimt">
-          <span class="opcion-emoji">✋</span>
-          <div class="opcion-info">
-            <div class="opcion-titulo">CIMT · Mano Izquierda</div>
-            <div class="opcion-desc">Usar solo la mano izquierda (restricción)</div>
-          </div>
-          <div class="switch"><input type="checkbox" id="sw-cimt"><span class="slider"></span></div>
-        </label>
-        <label class="opcion-terap" id="opt-saliencia">
-          <span class="opcion-emoji">📸</span>
-          <div class="opcion-info">
-            <div class="opcion-titulo">Memoria con fotos familiares</div>
-            <div class="opcion-desc">Reemplaza emojis por fotos cargadas</div>
-          </div>
-          <div class="switch"><input type="checkbox" id="sw-saliencia"><span class="slider"></span></div>
-        </label>
-        <label class="opcion-terap" id="opt-multi">
-          <span class="opcion-emoji">🔊</span>
-          <div class="opcion-info">
-            <div class="opcion-titulo">Feedback multisensorial</div>
-            <div class="opcion-desc">Voz + vibración en cada acierto</div>
-          </div>
-          <div class="switch"><input type="checkbox" id="sw-multi" checked><span class="slider"></span></div>
-        </label>
-        <label class="opcion-terap" id="opt-enfoque">
-          <span class="opcion-emoji">🎯</span>
-          <div class="opcion-info">
-            <div class="opcion-titulo">Modo Enfoque</div>
-            <div class="opcion-desc">Reduce elementos en pantalla durante el juego</div>
-          </div>
-          <div class="switch"><input type="checkbox" id="sw-enfoque"><span class="slider"></span></div>
-        </label>
+        <label class="opcion-terap"><span class="opcion-emoji">️‍🗨️</span><div class="opcion-info"><div class="opcion-titulo">Modo Hemianopsia</div><div class="opcion-desc">Estímulos 70% a la izquierda + guía visual y avisos</div></div><div class="switch"><input type="checkbox" id="sw-hemianopsia"><span class="slider"></span></div></label>
+        <label class="opcion-terap"><span class="opcion-emoji">✋</span><div class="opcion-info"><div class="opcion-titulo">CIMT · Mano Izquierda</div><div class="opcion-desc">Bonus por usar la mano izquierda</div></div><div class="switch"><input type="checkbox" id="sw-cimt"><span class="slider"></span></div></label>
+        <label class="opcion-terap"><span class="opcion-emoji">📸</span><div class="opcion-info"><div class="opcion-titulo">Memoria con fotos familiares</div><div class="opcion-desc">Reemplaza emojis por fotos cargadas</div></div><div class="switch"><input type="checkbox" id="sw-saliencia"><span class="slider"></span></div></label>
+        <label class="opcion-terap"><span class="opcion-emoji">🔊</span><div class="opcion-info"><div class="opcion-titulo">Feedback multisensorial</div><div class="opcion-desc">Voz + vibración en cada acierto</div></div><div class="switch"><input type="checkbox" id="sw-multi" checked><span class="slider"></span></div></label>
+        <label class="opcion-terap"><span class="opcion-emoji">🎯</span><div class="opcion-info"><div class="opcion-titulo">Modo Enfoque</div><div class="opcion-desc">Reduce elementos en pantalla durante el juego</div></div><div class="switch"><input type="checkbox" id="sw-enfoque"><span class="slider"></span></div></label>
       </div>
       <div id="upload-container" class="upload-fotos oculto">
         <input type="file" id="input-fotos" accept="image/*" multiple style="display:none;">
@@ -75,7 +54,6 @@
         <div id="galeria-fotos" class="galeria-fotos"></div>
       </div>
     </div>
-
     <div class="tarjeta">
       <h2 class="centrado">Dificultad inicial</h2>
       <div id="selector-inicio" class="segmentado">
@@ -84,43 +62,18 @@
         <button class="seg-opcion" data-dif="dificil">🌻 Difícil</button>
       </div>
     </div>
-
     <div class="acciones">
-      <button id="btn-comenzar" class="btn btn-grande">▶️ Comenzar</button>
-    </div>
-    <div class="acciones">
-      <button id="btn-sonido-inicio" class="toggle-sonido activo">🔊 Sonido</button>
-      <button class="btn btn-suave btn-tema">🌙 Modo oscuro</button>
-      <button id="btn-ver-progreso" class="btn btn-secundario">📊 Progreso</button>
+      <button id="btn-volver-config" class="btn btn-suave">🏠 Volver al menú</button>
     </div>
   </section>
 
-  <section id="pantalla-menu" class="pantalla">
-    <h1 class="titulo-pantalla">Elegí un juego 😊</h1>
-    <div class="menu-juegos">
-      <button id="btn-juego-memoria" class="juego-card jc-memoria">
-        <span class="emoji">🧠</span>Memoria<small>Parejas de cartas</small>
-      </button>
-      <button id="btn-juego-atencion" class="juego-card jc-atencion">
-        <span class="emoji">👀</span>Atención<small>Objeto diferente</small>
-      </button>
-      <button id="btn-juego-coordinacion" class="juego-card jc-coordinacion">
-        <span class="emoji">✋</span>Coordinación<small>Tocá las estrellas</small>
-      </button>
-      <button id="btn-juego-viaje" class="juego-card jc-viaje">
-        <span class="emoji">🚀</span>Viaje a las Estrellas<small>Un toque para saltar</small>
-      </button>
-    </div>
-    <div class="acciones">
-      <button id="btn-volver-inicio" class="btn btn-suave">🏠 Inicio</button>
-      <button id="btn-sonido-menu" class="toggle-sonido activo">🔊 Sonido</button>
-      <button class="btn btn-suave btn-tema">🌙 Modo oscuro</button>
-      <button id="btn-ver-progreso-menu" class="btn btn-secundario">📊 Progreso</button>
-    </div>
-  </section>
-
+  <!-- ============ MEMORIA ============ -->
   <section id="pantalla-memoria" class="pantalla">
     <p class="descripcion">Tocá las cartas y encontrá las parejas 🌸</p>
+    <div class="acciones acciones-arriba">
+      <button id="btn-reiniciar-memoria" class="btn btn-secundario">🔄 Reiniciar</button>
+      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
+    </div>
     <div class="fila-controles">
       <div id="selector-dif-memoria" class="segmentado segmentado-chico">
         <button class="seg-opcion" data-dif="facil">4 parejas</button>
@@ -134,14 +87,15 @@
     </div>
     <p id="memoria-feedback" class="feedback"></p>
     <div id="tablero-memoria" class="tablero-memoria"></div>
-    <div class="acciones">
-      <button id="btn-reiniciar-memoria" class="btn btn-secundario">🔄 Reiniciar</button>
-      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
-    </div>
   </section>
 
+  <!-- ============ ATENCIÓN ============ -->
   <section id="pantalla-atencion" class="pantalla">
     <p class="descripcion">Tocá el objeto diferente 👀</p>
+    <div class="acciones acciones-arriba">
+      <button id="btn-reiniciar-atencion" class="btn btn-secundario">🔄 Reiniciar</button>
+      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
+    </div>
     <div class="fila-controles">
       <div id="selector-dif-atencion" class="segmentado segmentado-chico">
         <button class="seg-opcion" data-dif="facil">🌱 3×3</button>
@@ -153,19 +107,18 @@
       <div class="stat">🃏 Ronda: <span id="atencion-ronda">—</span></div>
       <div class="stat">⏱️ <span id="atencion-tiempo">00:00</span></div>
     </div>
-    <div id="atencion-barra" class="barra-tiempo" style="visibility:hidden">
-      <div id="atencion-barra-fill" class="barra-tiempo-fill"></div>
-    </div>
+    <div id="atencion-barra" class="barra-tiempo" style="visibility:hidden"><div id="atencion-barra-fill" class="barra-tiempo-fill"></div></div>
     <p id="atencion-feedback" class="feedback"></p>
     <div id="tablero-atencion" class="tablero-atencion"></div>
-    <div class="acciones">
-      <button id="btn-reiniciar-atencion" class="btn btn-secundario">🔄 Reiniciar</button>
-      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
-    </div>
   </section>
 
+  <!-- ============ COORDINACIÓN ============ -->
   <section id="pantalla-coordinacion" class="pantalla">
     <p class="descripcion">Tocá las estrellas cuando aparezcan ✋</p>
+    <div class="acciones acciones-arriba">
+      <button id="btn-reiniciar-coordinacion" class="btn btn-secundario">🔄 Reiniciar</button>
+      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
+    </div>
     <div class="fila-controles">
       <div id="selector-dif-coordinacion" class="segmentado segmentado-chico">
         <button class="seg-opcion" data-dif="facil">🌱 Lento</button>
@@ -180,14 +133,15 @@
     </div>
     <p id="coord-feedback" class="feedback"></p>
     <div id="zona-coord" class="zona-coord"></div>
-    <div class="acciones">
-      <button id="btn-reiniciar-coordinacion" class="btn btn-secundario">🔄 Reiniciar</button>
-      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
-    </div>
   </section>
 
+  <!-- ============ VIAJE A LAS ESTRELLAS ============ -->
   <section id="pantalla-viaje" class="pantalla">
     <p class="descripcion">Tocá la pantalla para saltar rocas 🪨 y extraterrestres 👾. ¡Atrapá las estrellas ⭐!</p>
+    <div class="acciones acciones-arriba">
+      <button id="btn-reiniciar-viaje" class="btn btn-secundario">🔄 Reiniciar</button>
+      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
+    </div>
     <div class="fila-controles">
       <div id="selector-dif-viaje" class="segmentado segmentado-chico">
         <button class="seg-opcion" data-dif="facil">🌱 Paseo</button>
@@ -205,32 +159,44 @@
       <canvas id="canvas-viaje" width="860" height="420"></canvas>
       <div id="viaje-overlay" class="viaje-overlay-inicio">
         <h3>🚀 ¡Listo para despegar!</h3>
-        <p>Tocá la pantalla o presioná <strong>ESPACIO</strong> para que el astronauta salte. Esquivá los obstáculos y atrapá las estrellas.</p>
+        <p>Tocá la pantalla o presioná <strong>ESPACIO</strong> para saltar. Esquivá obstáculos y atrapá estrellas.</p>
         <button id="btn-viaje-empezar" class="btn btn-grande">▶️ Empezar viaje</button>
       </div>
       <div id="viaje-hint" class="viaje-tap-hint oculto">👆 Tocá para saltar</div>
     </div>
-    <div class="acciones">
-      <button id="btn-reiniciar-viaje" class="btn btn-secundario">🔄 Reiniciar</button>
-      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
-    </div>
   </section>
 
+  <!-- ============ PALABRAS (nuevo) ============ -->
+  <section id="pantalla-palabras" class="pantalla">
+    <p class="descripcion">Mirá la palabra y escribila con el teclado ✍️</p>
+    <div class="acciones acciones-arriba">
+      <button id="btn-reiniciar-palabras" class="btn btn-secundario">🔄 Reiniciar</button>
+      <button class="btn btn-suave btn-volver-menu">🏠 Menú</button>
+    </div>
+    <div class="fila-controles">
+      <div id="selector-dif-palabras" class="segmentado segmentado-chico">
+        <button class="seg-opcion" data-dif="facil">🌱 Cortas</button>
+        <button class="seg-opcion" data-dif="medio">🌼 Medias</button>
+        <button class="seg-opcion" data-dif="dificil">🌻 Largas</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat">📝 Palabra: <span id="palabras-progreso">0/0</span></div>
+      <div class="stat">❌ Errores: <span id="palabras-errores">0</span></div>
+      <div class="stat">⏱️ <span id="palabras-tiempo">00:00</span></div>
+    </div>
+    <p id="palabras-feedback" class="feedback"></p>
+    <div id="palabra-modelo" class="palabra-modelo"></div>
+    <div id="palabra-cajas" class="palabra-cajas"></div>
+    <div id="teclado" class="teclado"></div>
+  </section>
+
+  <!-- ============ PROGRESO ============ -->
   <section id="pantalla-progreso" class="pantalla">
     <h1 class="titulo-pantalla">📊 Progreso de Oscar</h1>
-    <div class="progreso-card">
-      <h3>👁️ Tiempo de reacción por lado</h3>
-      <p class="progreso-sub">Coord. · menor es mejor</p>
-      <div class="grafico-lados" id="grafico-lados"></div>
-    </div>
-    <div class="progreso-card">
-      <h3>📈 Resumen general</h3>
-      <div class="res-stats" id="resumen-general"></div>
-    </div>
-    <div class="progreso-card">
-      <h3>📅 Historial</h3>
-      <div class="sesiones-lista" id="sesiones-lista"></div>
-    </div>
+    <div class="progreso-card"><h3>👁️ Tiempo de reacción por lado</h3><p class="progreso-sub">Coordinación · menor es mejor</p><div class="grafico-lados" id="grafico-lados"></div></div>
+    <div class="progreso-card"><h3>📈 Resumen general</h3><div class="res-stats" id="resumen-general"></div></div>
+    <div class="progreso-card"><h3>📅 Historial</h3><div class="sesiones-lista" id="sesiones-lista"></div></div>
     <div class="acciones">
       <button id="btn-exportar" class="btn btn-secundario">📄 Exportar para kinesiólogo</button>
       <button id="btn-volver-desde-progreso" class="btn btn-suave">🏠 Inicio</button>
@@ -258,6 +224,17 @@
     <div class="modal-botones">
       <button id="btn-pausa-continuar" class="btn">▶️ Continuar</button>
       <button id="btn-pausa-salir" class="btn btn-suave">🚪 Salir</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de ejercicio con la mascota (bloquea la pantalla) -->
+<div id="modal-ejercicio" class="modal">
+  <div class="modal-caja">
+    <h2>🐶 Luna te propone un ejercicio</h2>
+    <p id="ejercicio-texto" class="ejercicio-texto"></p>
+    <div class="modal-botones">
+      <button id="btn-ejercicio-hecho" class="btn btn-grande">✅ ¡Lo hice!</button>
     </div>
   </div>
 </div>
