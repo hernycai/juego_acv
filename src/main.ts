@@ -91,7 +91,7 @@ const Sonido = {
   acierto(): void {
     this.inicializar();
     this.tono(523, .12); setTimeout(() => this.tono(659, .18), 90); setTimeout(() => this.tono(784, .25), 180);
-    if (Terapia.multi) this.hablar(aleatoria(['¡Muy bien Oscar!', '¡Excelente!', '¡Bravo!', '¡Sigue así!']));
+    if (Terapia.multi) this.hablar(aleatoria(['¡Muy bien Oscár!', '¡Excelente!', '¡Bravo!', '¡Sigue así!']));
     if (Terapia.multi && navigator.vibrate) navigator.vibrate([40, 30, 40]);
   },
   estrella(): void {
@@ -133,7 +133,7 @@ const Sonido = {
   nivel(): void {
     this.inicializar();
     [523, 659, 784, 1047].forEach((n, i) => setTimeout(() => this.tono(n, .2, 'triangle'), i * 120));
-    if (Terapia.multi) this.hablar('¡Felicitaciones Oscar, terminaste el nivel!');
+    if (Terapia.multi) this.hablar('¡Felicitaciones Oscár, terminaste el nivel!');
     if (Terapia.multi && navigator.vibrate) navigator.vibrate([60, 40, 60, 40, 100]);
   }
 };
@@ -1013,7 +1013,7 @@ function festejarMascota(): void {
   b.classList.add('visible');
   clearTimeout(_mascTimer);
   _mascTimer = window.setTimeout(() => b.classList.remove('visible'), 5000);
-  if (Terapia.multi) Sonido.hablar('¡Muy bien Oscar, ejercicio completado!');
+  if (Terapia.multi) Sonido.hablar('¡Muy bien Oscár, ejercicio completado!');
 }
 
 // ============ INIT ============
