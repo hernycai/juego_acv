@@ -589,24 +589,38 @@ class JuegoCoordinacion {
 const Coordinacion = new JuegoCoordinacion();
 
 // ============================================================
-// MINIJUEGO 4: MARIO BROS 2D PLATAFORMA (AVENTURA ESPACIAL)
+// MINIJUEGO 4: ASTRONAUTA STAR TREK (PLATAFORMA ESPACIAL)
 // ============================================================
 class JuegoViajeMario {
   private canvas: HTMLCanvasElement | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
   private animId: number = 0;
-  private jugadorY: number = 260;
+  private jugadorY: number = 290;
   private velocidadY: number = 0;
   private enSuelo: boolean = true;
-  private gravedad: number = 0.55;
-  private fuerzaSalto: number = -11;
-  private sueloY: number = 270;
+  private gravedad: number = 0.52;
+  private fuerzaSalto: number = -12.5;
+  private sueloY: number = 290;
   private puntos: number = 0;
   private vidas: number = 3;
   private obstaculos: ObstaculoMario[] = [];
   private monedas: MonedaMario[] = [];
   private running: boolean = false;
   private scrollOffset: number = 0;
+  private estrellas: { x: number; y: number; tam: number; vel: number; alpha: number }[] = [];
+
+  constructor() {
+    // Generar estrellas fijas para el fondo estelar
+    for (let i = 0; i < 60; i++) {
+      this.estrellas.push({
+        x: Math.random() * 900,
+        y: Math.random() * 260,
+        tam: Math.random() * 2.5 + 1,
+        vel: Math.random() * 0.8 + 0.3,
+        alpha: Math.random() * 0.7 + 0.3
+      });
+    }
+  }
 
   comenzar(dif: Dificultad) {
     this.canvas = $('#canvas-viaje') as HTMLCanvasElement;
@@ -620,8 +634,8 @@ class JuegoViajeMario {
     this.monedas = [];
     this.scrollOffset = 0;
 
-    $('#via-puntos').textContent = '0';
-    $('#via-vidas').textContent = '❤️'.repeat(this.vidas);
+    $('#via-puntos').textContent = '0 💎';
+    $('#via-vidas').textContent = '🛡️'.repeat(this.vidas);
     $('#viaje-overlay').style.display = 'none';
 
     this.running = true;
@@ -638,9 +652,9 @@ class JuegoViajeMario {
   private loop() {
     if (!this.running || !this.ctx || !this.canvas) return;
 
-    this.scrollOffset += 3;
+    this.scrollOffset += 3.5;
 
-    // Física
+    // Física del salto
     this.velocidadY += this.gravedad;
     this.jugadorY += this.velocidadY;
 
@@ -650,84 +664,283 @@ class JuegoViajeMario {
       this.enSuelo = true;
     }
 
-    // Spawn Obstáculos sobre la plataforma
-    if (Math.random() < 0.018) {
-      const tipos: ('tubería' | 'bloque' | 'hongo')[] = ['tubería', 'bloque', 'hongo'];
+    // Spawn Obstáculos Espaciales
+    if (Math.random() < 0.019) {
+      const tipos: ('asteroide' | 'barrera' | 'mina')[] = ['asteroide', 'barrera', 'mina'];
       const t = tipos[Math.floor(Math.random() * tipos.length)];
+      
+      let h = 60, w = 60, yOffset = 60;
+      if (t === 'barrera') { h = 75; w = 36; yOffset = 75; }
+      else if (t === 'mina') { h = 50; w = 50; yOffset = 50; }
+
       this.obstaculos.push({
-        x: this.canvas.width + 40,
-        y: this.sueloY - (t === 'tubería' ? 45 : t === 'bloque' ? 35 : 25),
-        w: 35,
-        h: t === 'tubería' ? 45 : t === 'bloque' ? 35 : 25,
+        x: this.canvas.width + 50,
+        y: this.sueloY + 30 - yOffset,
+        w: w,
+        h: h,
         tipo: t,
         golpeado: false
       });
     }
 
-    // Spawn Monedas flotando
-    if (Math.random() < 0.025) {
+    // Spawn Cristales de Energía
+    if (Math.random() < 0.026) {
       this.monedas.push({
-        x: this.canvas.width + 40,
-        y: this.sueloY - (Math.random() * 80 + 50),
-        r: 16,
+        x: this.canvas.width + 50,
+        y: this.sueloY - (Math.random() * 110 + 40),
+        r: 20,
         tomada: false
       });
     }
 
-    // --- DIBUJO ---
-    // Cielo Mario
-    this.ctx.fillStyle = '#5c94fc';
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    // --- RENDERING CANVAS (GRÁFICOS GRANDES Y ESTILO STAR TREK) ---
+    const width = this.canvas.width;
+    const height = this.canvas.height;
 
-    // Nubes
+    // 1. Fondo de Espacio Profundo
+    const gradientSpace = this.ctx.createLinearGradient(0, 0, 0, height);
+    gradientSpace.addColorStop(0, '#060814');
+    gradientSpace.addColorStop(0.7, '#0f172a');
+    gradientSpace.addColorStop(1, '#1e1b4b');
+    this.ctx.fillStyle = gradientSpace;
+    this.ctx.fillRect(0, 0, width, height);
+
+    // Nebulosa Cósmica
+    const nebulaGrad = this.ctx.createRadialGradient(750, 100, 10, 750, 100, 250);
+    nebulaGrad.addColorStop(0, 'rgba(124, 58, 237, 0.35)');
+    nebulaGrad.addColorStop(0.5, 'rgba(6, 182, 212, 0.2)');
+    nebulaGrad.addColorStop(1, 'transparent');
+    this.ctx.fillStyle = nebulaGrad;
+    this.ctx.fillRect(0, 0, width, height);
+
+    // Estrellas en Parallax
     this.ctx.fillStyle = '#ffffff';
-    const cloudX = (100 - (this.scrollOffset * 0.5)) % (this.canvas.width + 200);
+    for (const est of this.estrellas) {
+      est.x -= est.vel;
+      if (est.x < 0) est.x = width;
+      this.ctx.globalAlpha = est.alpha;
+      this.ctx.beginPath();
+      this.ctx.arc(est.x, est.y, est.tam, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+    this.ctx.globalAlpha = 1.0;
+
+    // Planeta distante con anillos
+    const planetX = (820 - (this.scrollOffset * 0.15)) % (width + 300) - 100;
+    this.ctx.fillStyle = '#f43f5e';
     this.ctx.beginPath();
-    this.ctx.arc(cloudX, 70, 25, 0, Math.PI * 2);
-    this.ctx.arc(cloudX + 30, 60, 30, 0, Math.PI * 2);
-    this.ctx.arc(cloudX + 60, 70, 25, 0, Math.PI * 2);
+    this.ctx.arc(planetX, 85, 30, 0, Math.PI * 2);
+    this.ctx.fill();
+    // Anillo del planeta
+    this.ctx.strokeStyle = 'rgba(251, 113, 133, 0.7)';
+    this.ctx.lineWidth = 4;
+    this.ctx.beginPath();
+    this.ctx.ellipse(planetX, 85, 50, 12, -0.2, 0, Math.PI * 2);
+    this.ctx.stroke();
+
+    // 2. Plataforma / Casco de Estación Espacial (Estilo Star Trek)
+    const sueloPosY = this.sueloY + 30;
+    this.ctx.fillStyle = '#0f172a'; // Base metalica
+    this.ctx.fillRect(0, sueloPosY, width, height - sueloPosY);
+
+    // Textura de paneles metálicos
+    this.ctx.strokeStyle = '#1e293b';
+    this.ctx.lineWidth = 2;
+    for (let px = -(this.scrollOffset % 60); px < width; px += 60) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(px, sueloPosY);
+      this.ctx.lineTo(px, height);
+      this.ctx.stroke();
+    }
+
+    // Borde Neón de la Plataforma (Línea LCARS Star Trek)
+    this.ctx.fillStyle = '#00f5d4'; // Neón cian
+    this.ctx.fillRect(0, sueloPosY - 6, width, 6);
+
+    // Detalles LCARS ambar
+    this.ctx.fillStyle = '#ffd166';
+    for (let lx = -(this.scrollOffset % 120); lx < width; lx += 120) {
+      this.ctx.fillRect(lx, sueloPosY - 6, 24, 6);
+    }
+
+    // 3. Dibujar Astronauta Oscar (Personaje Grande)
+    const posX = 140;
+    const posY = this.jugadorY + 30; // Pies sobre la plataforma
+
+    this.ctx.save();
+    this.ctx.translate(posX, posY);
+
+    // Jetpack (Mochila Espacial en la espalda)
+    this.ctx.fillStyle = '#475569';
+    this.ctx.fillRect(-22, -48, 12, 28);
+    this.ctx.fillStyle = '#00f5d4';
+    this.ctx.fillRect(-20, -44, 8, 4);
+
+    // Fuego del Jetpack al saltar
+    if (!this.enSuelo) {
+      this.ctx.fillStyle = '#f43f5e';
+      this.ctx.beginPath();
+      this.ctx.moveTo(-20, -20);
+      this.ctx.lineTo(-12, -20);
+      this.ctx.lineTo(-16, -20 + (Math.random() * 18 + 12));
+      this.ctx.fill();
+
+      this.ctx.fillStyle = '#38bdf8';
+      this.ctx.beginPath();
+      this.ctx.moveTo(-19, -20);
+      this.ctx.lineTo(-13, -20);
+      this.ctx.lineTo(-16, -20 + (Math.random() * 10 + 6));
+      this.ctx.fill();
+    }
+
+    // Traje Espacial (Cuerpo Blanco)
+    this.ctx.fillStyle = '#f8fafc';
+    this.ctx.strokeStyle = '#94a3b8';
+    this.ctx.lineWidth = 2.5;
+
+    // Torso
+    this.ctx.beginPath();
+    this.ctx.roundRect(-12, -48, 26, 32, 6);
+    this.ctx.fill();
+    this.ctx.stroke();
+
+    // Insignia Star Trek en el pecho
+    this.ctx.fillStyle = '#fbbf24';
+    this.ctx.beginPath();
+    this.ctx.moveTo(2, -42);
+    this.ctx.lineTo(8, -36);
+    this.ctx.lineTo(2, -32);
+    this.ctx.lineTo(-1, -36);
+    this.ctx.closePath();
     this.ctx.fill();
 
-    // Plataforma / Suelo
-    this.ctx.fillStyle = '#e76f51'; // Tierra
-    this.ctx.fillRect(0, this.sueloY + 40, this.canvas.width, this.canvas.height - (this.sueloY + 40));
-    this.ctx.fillStyle = '#2a9d8f'; // Pasto verde
-    this.ctx.fillRect(0, this.sueloY + 30, this.canvas.width, 10);
+    // Piernas (Animación de correr)
+    const legOffset = this.enSuelo ? Math.sin(this.scrollOffset * 0.2) * 8 : 4;
+    this.ctx.fillStyle = '#e2e8f0';
+    // Pierna Izquierda
+    this.ctx.fillRect(-10, -16, 10, 16 + legOffset);
+    this.ctx.strokeRect(-10, -16, 10, 16 + legOffset);
+    // Pierna Derecha
+    this.ctx.fillRect(2, -16, 10, 16 - legOffset);
+    this.ctx.strokeRect(2, -16, 10, 16 - legOffset);
 
-    // Jugador Oscar (Personaje 2D)
-    this.ctx.font = '40px sans-serif';
-    this.ctx.textAlign = 'center';
-    this.ctx.textBaseline = 'bottom';
-    this.ctx.fillText('🏃', 120, this.jugadorY + 35);
+    // Botas espacial oscuras
+    this.ctx.fillStyle = '#334155';
+    this.ctx.fillRect(-11, 0 + legOffset, 12, 6);
+    this.ctx.fillRect(1, 0 - legOffset, 12, 6);
 
-    // Obstáculos
+    // Casco de Astronauta
+    this.ctx.fillStyle = '#ffffff';
+    this.ctx.beginPath();
+    this.ctx.arc(1, -56, 18, 0, Math.PI * 2);
+    this.ctx.fill();
+    this.ctx.stroke();
+
+    // Visor Dorado Reflectante
+    this.ctx.fillStyle = '#f59e0b';
+    this.ctx.beginPath();
+    this.ctx.arc(5, -56, 12, -Math.PI * 0.4, Math.PI * 0.4);
+    this.ctx.fill();
+
+    // Reflejo de luz en visor
+    this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    this.ctx.beginPath();
+    this.ctx.ellipse(8, -58, 4, 2, Math.PI * 0.2, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    this.ctx.restore();
+
+    // 4. Dibujar Obstáculos
     for (let i = this.obstaculos.length - 1; i >= 0; i--) {
       const obs = this.obstaculos[i];
-      obs.x -= 3.5;
+      obs.x -= 3.8;
 
-      if (obs.tipo === 'tubería') {
-        this.ctx.fillStyle = '#38b000';
-        this.ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
-        this.ctx.strokeStyle = '#1b4332';
-        this.ctx.strokeRect(obs.x, obs.y, obs.w, obs.h);
-      } else if (obs.tipo === 'bloque') {
-        this.ctx.fillStyle = '#f4a261';
-        this.ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.font = '20px sans-serif';
-        this.ctx.fillText('?', obs.x + obs.w / 2, obs.y + obs.h);
+      if (obs.tipo === 'asteroide') {
+        // Asteroide de piedra espacial
+        this.ctx.save();
+        this.ctx.translate(obs.x + obs.w / 2, obs.y + obs.h / 2);
+        
+        // Aura de fuego espacial
+        this.ctx.fillStyle = 'rgba(239, 68, 68, 0.3)';
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, obs.w / 2 + 6, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Cuerpo rocoso
+        this.ctx.fillStyle = '#475569';
+        this.ctx.strokeStyle = '#1e293b';
+        this.ctx.lineWidth = 3;
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, obs.w / 2, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.stroke();
+
+        // Cráteres
+        this.ctx.fillStyle = '#334155';
+        this.ctx.beginPath();
+        this.ctx.arc(-10, -8, 8, 0, Math.PI * 2);
+        this.ctx.arc(8, 6, 6, 0, Math.PI * 2);
+        this.ctx.arc(-4, 10, 5, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        this.ctx.restore();
+      } else if (obs.tipo === 'barrera') {
+        // Barrera de Láser / Fuerza Neón Star Trek
+        this.ctx.fillStyle = '#64748b';
+        // Postes emisores superior e inferior
+        this.ctx.fillRect(obs.x, obs.y, obs.w, 12);
+        this.ctx.fillRect(obs.x, obs.y + obs.h - 12, obs.w, 12);
+
+        // Haz de plasma fluctuante
+        const laserColor = (Math.floor(this.scrollOffset / 5) % 2 === 0) ? '#00f5d4' : '#f43f5e';
+        this.ctx.fillStyle = laserColor;
+        this.ctx.shadowColor = laserColor;
+        this.ctx.shadowBlur = 12;
+        this.ctx.fillRect(obs.x + 8, obs.y + 12, obs.w - 16, obs.h - 24);
+        this.ctx.shadowBlur = 0;
       } else {
-        this.ctx.font = '30px sans-serif';
-        this.ctx.fillText('🍄', obs.x + obs.w / 2, obs.y + obs.h);
+        // Mina / Sonda Espacial Enemiga
+        this.ctx.save();
+        this.ctx.translate(obs.x + obs.w / 2, obs.y + obs.h / 2);
+
+        // Antenas
+        this.ctx.strokeStyle = '#94a3b8';
+        this.ctx.lineWidth = 3;
+        this.ctx.beginPath();
+        this.ctx.moveTo(-obs.w / 2, 0); this.ctx.lineTo(obs.w / 2, 0);
+        this.ctx.moveTo(0, -obs.h / 2); this.ctx.lineTo(0, obs.h / 2);
+        this.ctx.stroke();
+
+        // Núcleo pulsnte
+        this.ctx.fillStyle = '#0f172a';
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, obs.w / 2 - 6, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        // Ojo rojo brillante
+        this.ctx.fillStyle = '#ef4444';
+        this.ctx.shadowColor = '#ef4444';
+        this.ctx.shadowBlur = 10;
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, 9, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.shadowBlur = 0;
+
+        this.ctx.restore();
       }
 
-      // Colisión
-      const dist = Math.hypot(120 - (obs.x + obs.w / 2), (this.jugadorY + 10) - (obs.y + obs.h / 2));
-      if (dist < 30 && !obs.golpeado) {
+      // Detectar Colisión
+      const centroJugadorX = posX;
+      const centroJugadorY = this.jugadorY - 15;
+      const centroObsX = obs.x + obs.w / 2;
+      const centroObsY = obs.y + obs.h / 2;
+
+      const dist = Math.hypot(centroJugadorX - centroObsX, centroJugadorY - centroObsY);
+      if (dist < 38 && !obs.golpeado) {
         obs.golpeado = true;
         Sonido.error();
         this.vidas--;
-        $('#via-vidas').textContent = '❤️'.repeat(Math.max(0, this.vidas));
+        $('#via-vidas').textContent = '🛡️'.repeat(Math.max(0, this.vidas));
 
         if (this.vidas <= 0) {
           this.finalizar();
@@ -735,25 +948,53 @@ class JuegoViajeMario {
         }
       }
 
-      if (obs.x < -50) this.obstaculos.splice(i, 1);
+      if (obs.x < -70) this.obstaculos.splice(i, 1);
     }
 
-    // Monedas
+    // 5. Dibujar Cristales de Energía (Gems)
     for (let i = this.monedas.length - 1; i >= 0; i--) {
       const mon = this.monedas[i];
-      mon.x -= 3.5;
+      mon.x -= 3.8;
 
-      this.ctx.font = '28px sans-serif';
-      this.ctx.fillText('🪙', mon.x, mon.y);
+      this.ctx.save();
+      this.ctx.translate(mon.x, mon.y);
 
-      const dist = Math.hypot(120 - mon.x, (this.jugadorY + 10) - mon.y);
-      if (dist < 32 && !mon.tomada) {
+      // Resplandor neón
+      this.ctx.shadowColor = '#00f5d4';
+      this.ctx.shadowBlur = 10;
+
+      // Cristal de Dilithium 3D (Polígono Diamante)
+      this.ctx.fillStyle = '#00f5d4';
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, -18);
+      this.ctx.lineTo(14, 0);
+      this.ctx.lineTo(0, 18);
+      this.ctx.lineTo(-14, 0);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, -18);
+      this.ctx.lineTo(5, 0);
+      this.ctx.lineTo(0, 18);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      this.ctx.shadowBlur = 0;
+      this.ctx.restore();
+
+      const centroJugadorX = posX;
+      const centroJugadorY = this.jugadorY - 15;
+      const dist = Math.hypot(centroJugadorX - mon.x, centroJugadorY - mon.y);
+
+      if (dist < 42 && !mon.tomada) {
         mon.tomada = true;
         Sonido.acierto();
         this.puntos += 10;
-        $('#via-puntos').textContent = this.puntos.toString();
+        $('#via-puntos').textContent = `${this.puntos} 💎`;
         this.monedas.splice(i, 1);
-      } else if (mon.x < -40) {
+      } else if (mon.x < -50) {
         this.monedas.splice(i, 1);
       }
     }
@@ -765,12 +1006,12 @@ class JuegoViajeMario {
     this.running = false;
     cancelAnimationFrame(this.animId);
 
-    registrarSesion('viaje', Estado.dificultad, this.puntos, true, 30, { Monedas: this.puntos });
+    registrarSesion('viaje', Estado.dificultad, this.puntos, true, 30, { Cristales: this.puntos });
 
     mostrarResumen({
-      titulo: '🍄 ¡Gran Aventura Oscar!',
-      mensaje: 'Recorriste la plataforma esquivando obstáculos.',
-      stats: [{ etiqueta: 'Monedas Recolectadas', valor: `${this.puntos} 🪙` }],
+      titulo: '🚀 ¡Misión Espacial Cumplida!',
+      mensaje: 'Navegaste con éxito al astronauta Oscar esquivando los obstáculos espaciales.',
+      stats: [{ etiqueta: 'Cristales de Energía', valor: `${this.puntos} 💎` }],
       juego: 'viaje',
       nivel: Estado.dificultad,
       exitoso: true,
@@ -963,6 +1204,27 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Controles Barra Juego
+  $('#btn-sonido-barra').addEventListener('click', () => {
+    Sonido.activo = !Sonido.activo;
+    const btn = $('#btn-sonido-barra');
+    if (Sonido.activo) {
+      btn.innerHTML = '🔊 Sonido';
+      btn.classList.add('activo');
+    } else {
+      btn.innerHTML = '🔇 Silencio';
+      btn.classList.remove('activo');
+    }
+  });
+
+  $('#btn-barra-reiniciar').addEventListener('click', () => {
+    Sonido.click();
+    if (Estado.juegoActivo === 'memoria') Memoria.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'atencion') Atencion.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'coordinacion') Coordinacion.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'viaje') ViajeMario.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'palabras') Palabras.comenzar(Estado.dificultad);
+  });
+
   $('#btn-barra-menu').addEventListener('click', () => {
     Sonido.click();
     Memoria.detener(); Atencion.detener(); Coordinacion.detener(); ViajeMario.detener(); Palabras.detener();
@@ -972,6 +1234,12 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#btn-pausa').addEventListener('click', () => {
     Sonido.click();
     $('#modal-pausa').classList.add('activo');
+  });
+
+  $('#btn-salir').addEventListener('click', () => {
+    Sonido.click();
+    Memoria.detener(); Atencion.detener(); Coordinacion.detener(); ViajeMario.detener(); Palabras.detener();
+    mostrarPantalla('menu');
   });
 
   $('#btn-pausa-continuar').addEventListener('click', () => {
@@ -1022,6 +1290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ViajeMario.saltar();
   });
   $('#canvas-viaje').addEventListener('click', () => ViajeMario.saltar());
+  $('#btn-viaje-saltar').addEventListener('click', () => ViajeMario.saltar());
 
   // Progreso
   $('#btn-volver-desde-progreso').addEventListener('click', () => { Sonido.click(); mostrarPantalla('menu'); });

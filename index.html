@@ -30,9 +30,9 @@
     </button>
   </div>
   <div class="grupo-derecha">
-    <button id="btn-sonido-barra" class="toggle-sonido activo" aria-label="Sonido">🔊</button>
-    <button id="btn-barra-reiniciar" class="btn btn-mini btn-secundario" aria-label="Reiniciar nivel">🔄</button>
-    <button id="btn-barra-menu" class="btn btn-mini btn-suave" aria-label="Volver al menú">🏠</button>
+    <button id="btn-sonido-barra" class="btn btn-mini btn-suave toggle-sonido activo" aria-label="Sonido">🔊 Sonido</button>
+    <button id="btn-barra-reiniciar" class="btn btn-mini btn-secundario" aria-label="Reiniciar nivel">🔄 Reiniciar</button>
+    <button id="btn-barra-menu" class="btn btn-mini btn-suave" aria-label="Volver al menú">🏠 Menú</button>
     <button id="btn-pausa" class="btn btn-mini">⏸️ Pausa</button>
     <button id="btn-salir" class="btn btn-mini btn-peligro-suave">🚪 Salir</button>
   </div>
@@ -46,7 +46,7 @@
         <h1 class="titulo-pantalla">¡Hola Oscar! 👋</h1>
         <button id="btn-brisa-menu" class="btn-brisa-avatar" aria-label="Interactuar con Brisa">
           <span class="avatar-emoji">🐶</span>
-          <span class="avatar-tooltip">¡Hola Oscar! Tocame para hablar</span>
+          <span class="avatar-tooltip avatar-burbuja">Has click aca</span>
         </button>
       </div>
       <p class="subtitulo-pantalla">Elegí el ejercicio que quieras realizar hoy para ejercitar tu mente:</p>
@@ -78,10 +78,10 @@
       </button>
 
       <button id="btn-juego-viaje" class="juego-card jc-viaje">
-        <span class="emoji">🍄</span>
+        <span class="emoji">👨‍🚀</span>
         <div class="info">
-          <h3>Aventura de Plataformas (Mario Bros 2D)</h3>
-          <p>Camina sobre la plataforma, salta obstáculos y junta monedas.</p>
+          <h3>Misión Espacial (Astronauta Star Trek)</h3>
+          <p>Manejá al astronauta, salta para esquivar asteroides y láseres, y junta cristales de energía.</p>
         </div>
       </button>
 
@@ -141,21 +141,22 @@
     </div>
   </section>
 
-  <!-- ============ JUEGO: MARIO BROS 2D PLATAFORMA ============ -->
+  <!-- ============ JUEGO: ASTRONAUTA STAR TREK (PLATAFORMA ESPACIAL) ============ -->
   <section id="pantalla-viaje" class="pantalla">
     <div class="panel-control">
       <div id="selector-dif-viaje" class="selector-dificultad"></div>
       <div class="stats-live">
-        <span>Vidas: <strong id="via-vidas">❤️❤️❤️</strong></span>
-        <span>Monedas: <strong id="via-puntos">0</strong></span>
+        <span>Escudo: <strong id="via-vidas">🛡️🛡️🛡️</strong></span>
+        <span>Cristales: <strong id="via-puntos">0 💎</strong></span>
       </div>
     </div>
     <div class="viaje-contenedor">
-      <canvas id="canvas-viaje" width="800" height="400"></canvas>
+      <canvas id="canvas-viaje" width="900" height="460"></canvas>
+      <button id="btn-viaje-saltar" class="btn btn-grande btn-salto-espacial">🚀 ¡SALTAR ASTRONAUTA! (Espacio / Clic)</button>
       <div id="viaje-overlay" class="viaje-overlay-inicio">
-        <h3>🍄 Aventura de Plataforma de Oscar</h3>
-        <p>Oscar camina automáticamente. Tocá la pantalla o presioná la Barra Espaciadora para SALTAR tuberías y bloques.</p>
-        <button id="btn-viaje-iniciar" class="btn btn-grande">🍄 Iniciar Aventura</button>
+        <h3>🚀 Misión Espacial Star Trek de Oscar</h3>
+        <p>Oscar el Astronauta avanza por la estación espacial. Tocá el botón gigante, hacé clic en la pantalla o presioná la Barra Espaciadora para SALTAR asteroides, láseres y minas espaciales.</p>
+        <button id="btn-viaje-iniciar" class="btn btn-grande">🚀 Iniciar Misión Espacial</button>
       </div>
     </div>
   </section>

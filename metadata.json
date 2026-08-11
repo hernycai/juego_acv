@@ -1,0 +1,8 @@
+{
+  "name": "Rehabilitación Cognitiva — Oscar",
+  "description": "Tu programa personalizado de ejercitación cognitiva y agilidad visual",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

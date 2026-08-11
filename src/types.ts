@@ -45,7 +45,7 @@ export interface ObstaculoMario {
   y: number;
   w: number;
   h: number;
-  tipo: 'tubería' | 'bloque' | 'hongo';
+  tipo: 'asteroide' | 'barrera' | 'mina' | 'tubería' | 'bloque' | 'hongo';
   golpeado: boolean;
 }
 
