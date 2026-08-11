@@ -111,7 +111,7 @@ const ILUSTRACIONES_SVG: Record<string, string> = {
 // ESTADO GLOBAL Y CONFIGURACIÓN TERAPÉUTICA
 // ============================================================
 const Estado: EstadoGlobal = {
-  dificultad: 'medio',
+  dificultad: 'facil', // Por defecto SIEMPRE Nivel Fácil
   juegoActivo: null,
   enPausa: false,
   terminado: false
@@ -131,6 +131,96 @@ const $ = <T extends HTMLElement = HTMLElement>(sel: string): T => {
 };
 
 // ============================================================
+// MOTOR DE FONDO ESTELAR Y CAMBIO DE TEMA STAR TREK
+// ============================================================
+class MotorFondoEstelar {
+  private canvas: HTMLCanvasElement | null = null;
+  private ctx: CanvasRenderingContext2D | null = null;
+  private estrellas: { x: number; y: number; tam: number; vel: number; alpha: number; dAlpha: number }[] = [];
+
+  iniciar() {
+    this.canvas = document.querySelector('#fondo-estelar-canvas') as HTMLCanvasElement;
+    if (!this.canvas) return;
+    this.ctx = this.canvas.getContext('2d');
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+
+    this.estrellas = [];
+    for (let i = 0; i < 110; i++) {
+      this.estrellas.push({
+        x: Math.random() * (this.canvas.width || window.innerWidth),
+        y: Math.random() * (this.canvas.height || window.innerHeight),
+        tam: Math.random() * 2.2 + 0.8,
+        vel: Math.random() * 0.35 + 0.1,
+        alpha: Math.random() * 0.8 + 0.2,
+        dAlpha: (Math.random() - 0.5) * 0.015
+      });
+    }
+
+    this.loop();
+  }
+
+  private resize() {
+    if (!this.canvas) return;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  private loop() {
+    if (!this.canvas || !this.ctx) return;
+
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    const esOscuro = document.documentElement.getAttribute('data-theme') === 'oscuro';
+    const colorEstrella = esOscuro ? '#00f5d4' : '#4361ee';
+
+    for (const est of this.estrellas) {
+      est.y -= est.vel;
+      if (est.y < 0) {
+        est.y = this.canvas.height;
+        est.x = Math.random() * this.canvas.width;
+      }
+
+      est.alpha += est.dAlpha;
+      if (est.alpha > 0.95 || est.alpha < 0.2) est.dAlpha = -est.dAlpha;
+
+      this.ctx.globalAlpha = Math.max(0.1, Math.min(1, est.alpha));
+      this.ctx.fillStyle = colorEstrella;
+      this.ctx.beginPath();
+      this.ctx.arc(est.x, est.y, est.tam, 0, Math.PI * 2);
+      this.ctx.fill();
+    }
+    this.ctx.globalAlpha = 1.0;
+
+    requestAnimationFrame(() => this.loop());
+  }
+}
+
+const FondoEstelar = new MotorFondoEstelar();
+
+function toggleTema() {
+  const actual = document.documentElement.getAttribute('data-theme') || 'oscuro';
+  const nuevo = actual === 'oscuro' ? 'claro' : 'oscuro';
+  document.documentElement.setAttribute('data-theme', nuevo);
+  
+  const btn = document.querySelector('#btn-tema-toggle');
+  if (btn) {
+    btn.textContent = nuevo === 'oscuro' ? '🌌 Modo Estelar' : '☀️ Modo Claro';
+  }
+  
+  localStorage.setItem('oscar_tema_preferido', nuevo);
+}
+
+function cargarTemaGuardado() {
+  const guardado = localStorage.getItem('oscar_tema_preferido') || 'oscuro';
+  document.documentElement.setAttribute('data-theme', guardado);
+  const btn = document.querySelector('#btn-tema-toggle');
+  if (btn) {
+    btn.textContent = guardado === 'oscuro' ? '🌌 Modo Estelar' : '☀️ Modo Claro';
+  }
+}
+
+// ============================================================
 // INTERACCIÓN CON BRISA
 // ============================================================
 function abrirModalBrisa() {
@@ -148,6 +238,11 @@ function mostrarPantalla(id: string) {
   document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
   const target = $(`#pantalla-${id}`);
   target.classList.add('activa');
+
+  // Cada vez que ingresamos a un juego, se fuerza el nivel FÁCIL por defecto
+  if (id !== 'menu' && id !== 'progreso' && id !== 'config') {
+    Estado.dificultad = 'facil';
+  }
 
   const barra = $('#barra-juego');
   if (id === 'menu' || id === 'progreso' || id === 'config') {
@@ -598,11 +693,11 @@ class JuegoViajeMario {
   private jugadorY: number = 290;
   private velocidadY: number = 0;
   private enSuelo: boolean = true;
-  private gravedad: number = 0.52;
-  private fuerzaSalto: number = -12.5;
+  private gravedad: number = 0.38; // Salto muy flotante y pausado
+  private fuerzaSalto: number = -10.8;
   private sueloY: number = 290;
   private puntos: number = 0;
-  private vidas: number = 3;
+  private vidas: number = 5;
   private obstaculos: ObstaculoMario[] = [];
   private monedas: MonedaMario[] = [];
   private running: boolean = false;
@@ -610,13 +705,12 @@ class JuegoViajeMario {
   private estrellas: { x: number; y: number; tam: number; vel: number; alpha: number }[] = [];
 
   constructor() {
-    // Generar estrellas fijas para el fondo estelar
     for (let i = 0; i < 60; i++) {
       this.estrellas.push({
         x: Math.random() * 900,
         y: Math.random() * 260,
         tam: Math.random() * 2.5 + 1,
-        vel: Math.random() * 0.8 + 0.3,
+        vel: Math.random() * 0.5 + 0.2,
         alpha: Math.random() * 0.7 + 0.3
       });
     }
@@ -629,7 +723,7 @@ class JuegoViajeMario {
     this.velocidadY = 0;
     this.enSuelo = true;
     this.puntos = 0;
-    this.vidas = dif === 'facil' ? 5 : dif === 'medio' ? 3 : 2;
+    this.vidas = dif === 'facil' ? 6 : dif === 'medio' ? 4 : 3;
     this.obstaculos = [];
     this.monedas = [];
     this.scrollOffset = 0;
@@ -652,9 +746,9 @@ class JuegoViajeMario {
   private loop() {
     if (!this.running || !this.ctx || !this.canvas) return;
 
-    this.scrollOffset += 3.5;
+    this.scrollOffset += 2.0; // Desplazamiento lento y pausado
 
-    // Física del salto
+    // Física del salto accesible
     this.velocidadY += this.gravedad;
     this.jugadorY += this.velocidadY;
 
@@ -664,14 +758,15 @@ class JuegoViajeMario {
       this.enSuelo = true;
     }
 
-    // Spawn Obstáculos Espaciales
-    if (Math.random() < 0.019) {
+    // Spawn Obstáculos Espaciales con DISTANCIA MÍNIMA AMPLISIMA (380px)
+    const ultimoX = this.obstaculos.length > 0 ? Math.max(...this.obstaculos.map(o => o.x)) : -999;
+    if ((this.canvas.width - ultimoX >= 380) && Math.random() < 0.007) {
       const tipos: ('asteroide' | 'barrera' | 'mina')[] = ['asteroide', 'barrera', 'mina'];
       const t = tipos[Math.floor(Math.random() * tipos.length)];
       
-      let h = 60, w = 60, yOffset = 60;
-      if (t === 'barrera') { h = 75; w = 36; yOffset = 75; }
-      else if (t === 'mina') { h = 50; w = 50; yOffset = 50; }
+      let h = 55, w = 55, yOffset = 55;
+      if (t === 'barrera') { h = 65; w = 32; yOffset = 65; }
+      else if (t === 'mina') { h = 45; w = 45; yOffset = 45; }
 
       this.obstaculos.push({
         x: this.canvas.width + 50,
@@ -683,8 +778,8 @@ class JuegoViajeMario {
       });
     }
 
-    // Spawn Cristales de Energía
-    if (Math.random() < 0.026) {
+    // Spawn Cristales de Energía abundantes para motivación
+    if (Math.random() < 0.035) {
       this.monedas.push({
         x: this.canvas.width + 50,
         y: this.sueloY - (Math.random() * 110 + 40),
@@ -1164,6 +1259,13 @@ const Palabras = new JuegoPalabras();
 // INICIALIZACIÓN DE EVENTOS GLOBAL Y BINDINGS
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Iniciar Fondo Estelar Animado y Tema Star Trek
+  FondoEstelar.iniciar();
+  cargarTemaGuardado();
+
+  const btnTema = document.querySelector('#btn-tema-toggle');
+  if (btnTema) btnTema.addEventListener('click', toggleTema);
+
   // Intro Presentación
   $('#btn-comenzar-intro').addEventListener('click', () => {
     Sonido.click();
@@ -1171,37 +1273,71 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Config.multi) hablarMensaje('¡Bienvenido Oscar! Elegí el ejercicio que quieras realizar hoy.');
   });
 
-  // Mascotas Brisa
+  // Mascotas Brisa (General y Compañeras Laterales en los juegos)
   $('#btn-mascota-brisa').addEventListener('click', () => abrirModalBrisa());
   $('#btn-brisa-menu').addEventListener('click', () => abrirModalBrisa());
+  const brisaMenuContainer = document.querySelector('#brisa-menu-container');
+  if (brisaMenuContainer) brisaMenuContainer.addEventListener('click', () => abrirModalBrisa());
   $('#btn-brisa-cerrar').addEventListener('click', () => $('#modal-brisa').classList.remove('activo'));
   $('#btn-brisa-hablar-otra').addEventListener('click', () => abrirModalBrisa());
 
-  // Navegación Menú
-  $('#btn-juego-memoria').addEventListener('click', () => { Sonido.click(); mostrarPantalla('memoria'); Memoria.comenzar(Estado.dificultad); });
-  $('#btn-juego-atencion').addEventListener('click', () => { Sonido.click(); mostrarPantalla('atencion'); Atencion.comenzar(Estado.dificultad); });
-  $('#btn-juego-coordinacion').addEventListener('click', () => { Sonido.click(); mostrarPantalla('coordinacion'); Coordinacion.comenzar(Estado.dificultad); });
-  $('#btn-juego-viaje').addEventListener('click', () => { Sonido.click(); mostrarPantalla('viaje'); });
-  $('#btn-juego-palabras').addEventListener('click', () => { Sonido.click(); mostrarPantalla('palabras'); Palabras.comenzar(Estado.dificultad); });
+  document.querySelectorAll('.brisa-companion-lateral').forEach(companion => {
+    companion.addEventListener('click', () => abrirModalBrisa());
+  });
+
+  // Navegación Menú Principal - Por defecto forzar SIEMPRE nivel Fácil
+  $('#btn-juego-memoria').addEventListener('click', () => {
+    Sonido.click();
+    Estado.dificultad = 'facil';
+    mostrarPantalla('memoria');
+    Memoria.comenzar('facil');
+  });
+
+  $('#btn-juego-atencion').addEventListener('click', () => {
+    Sonido.click();
+    Estado.dificultad = 'facil';
+    mostrarPantalla('atencion');
+    Atencion.comenzar('facil');
+  });
+
+  $('#btn-juego-coordinacion').addEventListener('click', () => {
+    Sonido.click();
+    Estado.dificultad = 'facil';
+    mostrarPantalla('coordinacion');
+    Coordinacion.comenzar('facil');
+  });
+
+  $('#btn-juego-viaje').addEventListener('click', () => {
+    Sonido.click();
+    Estado.dificultad = 'facil';
+    mostrarPantalla('viaje');
+  });
+
+  $('#btn-juego-palabras').addEventListener('click', () => {
+    Sonido.click();
+    Estado.dificultad = 'facil';
+    mostrarPantalla('palabras');
+    Palabras.comenzar('facil');
+  });
 
   $('#btn-viaje-iniciar').addEventListener('click', () => { ViajeMario.comenzar(Estado.dificultad); });
   $('#btn-palabra-borrar').addEventListener('click', () => Palabras.borrarLetra());
 
-  $('#btn-ir-progreso').addEventListener('click', () => { Sonido.click(); renderizarProgreso(); mostrarPantalla('progreso'); });
-  $('#btn-ir-config').addEventListener('click', () => {
-    Sonido.click();
-    ($('#chk-hemianopsia') as HTMLInputElement).checked = Config.hemianopsia;
-    ($('#chk-multi') as HTMLInputElement).checked = Config.multi;
-    mostrarPantalla('config');
-  });
+  // Configuración opcional si existe en el DOM
+  const btnIrProgreso = document.querySelector('#btn-ir-progreso');
+  if (btnIrProgreso) {
+    btnIrProgreso.addEventListener('click', () => { Sonido.click(); renderizarProgreso(); mostrarPantalla('progreso'); });
+  }
 
-  // Configuración
-  $('#btn-volver-desde-config').addEventListener('click', () => {
-    Sonido.click();
-    Config.hemianopsia = ($('#chk-hemianopsia') as HTMLInputElement).checked;
-    Config.multi = ($('#chk-multi') as HTMLInputElement).checked;
-    mostrarPantalla('menu');
-  });
+  const btnIrConfig = document.querySelector('#btn-ir-config');
+  if (btnIrConfig) {
+    btnIrConfig.addEventListener('click', () => {
+      Sonido.click();
+      ($('#chk-hemianopsia') as HTMLInputElement).checked = Config.hemianopsia;
+      ($('#chk-multi') as HTMLInputElement).checked = Config.multi;
+      mostrarPantalla('config');
+    });
+  }
 
   // Controles Barra Juego
   $('#btn-sonido-barra').addEventListener('click', () => {
@@ -1225,11 +1361,14 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (Estado.juegoActivo === 'palabras') Palabras.comenzar(Estado.dificultad);
   });
 
-  $('#btn-barra-menu').addEventListener('click', () => {
-    Sonido.click();
-    Memoria.detener(); Atencion.detener(); Coordinacion.detener(); ViajeMario.detener(); Palabras.detener();
-    mostrarPantalla('menu');
-  });
+  const btnBarraMenu = document.querySelector('#btn-barra-menu');
+  if (btnBarraMenu) {
+    btnBarraMenu.addEventListener('click', () => {
+      Sonido.click();
+      Memoria.detener(); Atencion.detener(); Coordinacion.detener(); ViajeMario.detener(); Palabras.detener();
+      mostrarPantalla('menu');
+    });
+  }
 
   $('#btn-pausa').addEventListener('click', () => {
     Sonido.click();
@@ -1292,6 +1431,8 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#canvas-viaje').addEventListener('click', () => ViajeMario.saltar());
   $('#btn-viaje-saltar').addEventListener('click', () => ViajeMario.saltar());
 
-  // Progreso
-  $('#btn-volver-desde-progreso').addEventListener('click', () => { Sonido.click(); mostrarPantalla('menu'); });
+  const btnVolverProgreso = document.querySelector('#btn-volver-desde-progreso');
+  if (btnVolverProgreso) {
+    btnVolverProgreso.addEventListener('click', () => { Sonido.click(); mostrarPantalla('menu'); });
+  }
 });

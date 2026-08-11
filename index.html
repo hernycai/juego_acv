@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="claro">
+<html lang="es" data-theme="oscuro">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rehabilitación Cognitiva — Oscar</title>
 </head>
 <body>
+<canvas id="fondo-estelar-canvas"></canvas>
 
 <!-- ============ PRESENTACIÓN / INTRO INICIAL ============ -->
 <div id="pantalla-presentacion" class="intro-overlay activa">
@@ -32,9 +33,8 @@
   <div class="grupo-derecha">
     <button id="btn-sonido-barra" class="btn btn-mini btn-suave toggle-sonido activo" aria-label="Sonido">🔊 Sonido</button>
     <button id="btn-barra-reiniciar" class="btn btn-mini btn-secundario" aria-label="Reiniciar nivel">🔄 Reiniciar</button>
-    <button id="btn-barra-menu" class="btn btn-mini btn-suave" aria-label="Volver al menú">🏠 Menú</button>
     <button id="btn-pausa" class="btn btn-mini">⏸️ Pausa</button>
-    <button id="btn-salir" class="btn btn-mini btn-peligro-suave">🚪 Salir</button>
+    <button id="btn-salir" class="btn btn-mini btn-peligro-suave">🚪 Salir al Menú</button>
   </div>
 </header>
 
@@ -43,11 +43,8 @@
   <section id="pantalla-menu" class="pantalla activa">
     <div class="encabezado-menu">
       <div class="saludo-box">
-        <h1 class="titulo-pantalla">¡Hola Oscar! 👋</h1>
-        <button id="btn-brisa-menu" class="btn-brisa-avatar" aria-label="Interactuar con Brisa">
-          <span class="avatar-emoji">🐶</span>
-          <span class="avatar-tooltip avatar-burbuja">Has click aca</span>
-        </button>
+        <h1 class="titulo-pantalla">¡Hola Oscar! 🖖</h1>
+        <button id="btn-tema-toggle" class="btn btn-mini btn-suave btn-tema-toggle" aria-label="Cambiar tema">🌌 Modo Estelar</button>
       </div>
       <p class="subtitulo-pantalla">Elegí el ejercicio que quieras realizar hoy para ejercitar tu mente:</p>
     </div>
@@ -56,7 +53,7 @@
       <button id="btn-juego-memoria" class="juego-card jc-memoria">
         <span class="emoji">🖼️</span>
         <div class="info">
-          <h3>Memoria Visual (Ilustraciones)</h3>
+          <h3>Memoria Visual</h3>
           <p>Encontrá las parejas de ilustraciones en tarjetas grandes.</p>
         </div>
       </button>
@@ -80,8 +77,8 @@
       <button id="btn-juego-viaje" class="juego-card jc-viaje">
         <span class="emoji">👨‍🚀</span>
         <div class="info">
-          <h3>Misión Espacial (Astronauta Star Trek)</h3>
-          <p>Manejá al astronauta, salta para esquivar asteroides y láseres, y junta cristales de energía.</p>
+          <h3>Misión Espacial</h3>
+          <p>Saltá para esquivar asteroides y juntar cristales.</p>
         </div>
       </button>
 
@@ -89,92 +86,138 @@
         <span class="emoji">🔤</span>
         <div class="info">
           <h3>Desafío de Palabras</h3>
-          <p>Armá palabras de 4, 5 o 6 letras según el nivel elegido.</p>
+          <p>Armá palabras completando las letras elegidas.</p>
         </div>
       </button>
-    </div>
 
-    <div class="menu-inferior">
-      <button id="btn-ir-progreso" class="btn btn-suave">📊 Ver Mi Progreso</button>
-      <button id="btn-ir-config" class="btn btn-suave">⚙️ Opciones Terapéuticas</button>
+      <div id="brisa-menu-container" class="brisa-flotante-grid">
+        <button id="btn-brisa-menu" class="btn-brisa-imagen-wrapper" aria-label="Interactuar con Brisa" title="Hablar con Brisa">
+          <div class="brisa-burbuja-imagen">
+            <span>Has click aca</span>
+          </div>
+          <div class="brisa-avatar-circulo">
+            <span class="avatar-emoji-img">🐶</span>
+          </div>
+        </button>
+      </div>
     </div>
   </section>
 
   <!-- ============ JUEGO: MEMORIA ============ -->
   <section id="pantalla-memoria" class="pantalla">
-    <div class="panel-control">
-      <div id="selector-dif-memoria" class="selector-dificultad"></div>
-      <div class="stats-live">
-        <span>Intentos: <strong id="mem-intentos">0</strong></span>
-        <span>Tiempo: <strong id="mem-tiempo">00:00</strong></span>
+    <div class="juego-layout-con-brisa">
+      <div class="brisa-companion-lateral" title="Brisa te acompaña">
+        <span class="companion-emoji">🐶</span>
+        <div class="companion-burbuja">¡Vamos Oscar! 🐾 Tómate tu tiempo.</div>
+      </div>
+      <div class="juego-area-principal">
+        <div class="panel-control">
+          <div id="selector-dif-memoria" class="selector-dificultad"></div>
+          <div class="stats-live">
+            <span>Intentos: <strong id="mem-intentos">0</strong></span>
+            <span>Tiempo: <strong id="mem-tiempo">00:00</strong></span>
+          </div>
+        </div>
+        <div id="grid-memoria" class="grid-memoria"></div>
       </div>
     </div>
-    <div id="grid-memoria" class="grid-memoria"></div>
   </section>
 
   <!-- ============ JUEGO: ATENCIÓN ============ -->
   <section id="pantalla-atencion" class="pantalla">
-    <div class="panel-control">
-      <div id="selector-dif-atencion" class="selector-dificultad"></div>
-      <div class="stats-live">
-        <span>Ronda: <strong id="ate-ronda">1/5</strong></span>
-        <span>Puntos: <strong id="ate-puntos">0</strong></span>
+    <div class="juego-layout-con-brisa">
+      <div class="brisa-companion-lateral" title="Brisa te acompaña">
+        <span class="companion-emoji">🐶</span>
+        <div class="companion-burbuja">¡Gran enfoque visual, Oscar! 🐾</div>
       </div>
-    </div>
-    <div id="instruccion-atencion" class="instruccion">Tocá la figura diferente. ¡Tómate tu tiempo!</div>
-    <div class="atencion-contenedor-centrado">
-      <div id="grid-atencion" class="grid-atencion guia-hemianopsia-izq"></div>
+      <div class="juego-area-principal">
+        <div class="panel-control">
+          <div id="selector-dif-atencion" class="selector-dificultad"></div>
+          <div class="stats-live">
+            <span>Ronda: <strong id="ate-ronda">1/5</strong></span>
+            <span>Puntos: <strong id="ate-puntos">0</strong></span>
+          </div>
+        </div>
+        <div id="instruccion-atencion" class="instruccion">Tocá la figura diferente. ¡Tómate tu tiempo!</div>
+        <div class="atencion-contenedor-centrado">
+          <div id="grid-atencion" class="grid-atencion guia-hemianopsia-izq"></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ============ JUEGO: GLOBOS / COORDINACIÓN ============ -->
   <section id="pantalla-coordinacion" class="pantalla">
-    <div class="panel-control">
-      <div id="selector-dif-coordinacion" class="selector-dificultad"></div>
-      <div class="stats-live">
-        <span>Explotados: <strong id="coo-aciertos">0</strong></span>
-        <span>Escapados: <strong id="coo-escapados">0</strong></span>
+    <div class="juego-layout-con-brisa">
+      <div class="brisa-companion-lateral" title="Brisa te acompaña">
+        <span class="companion-emoji">🐶</span>
+        <div class="companion-burbuja">¡Explotá los globos con calma, Oscar! 🎈</div>
       </div>
-    </div>
-    <div class="coordinacion-marco-seguro">
-      <div id="area-coordinacion" class="area-coordinacion guia-hemianopsia-izq"></div>
+      <div class="juego-area-principal">
+        <div class="panel-control">
+          <div id="selector-dif-coordinacion" class="selector-dificultad"></div>
+          <div class="stats-live">
+            <span>Explotados: <strong id="coo-aciertos">0</strong></span>
+            <span>Escapados: <strong id="coo-escapados">0</strong></span>
+          </div>
+        </div>
+        <div class="coordinacion-marco-seguro">
+          <div id="area-coordinacion" class="area-coordinacion guia-hemianopsia-izq"></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ============ JUEGO: ASTRONAUTA STAR TREK (PLATAFORMA ESPACIAL) ============ -->
   <section id="pantalla-viaje" class="pantalla">
-    <div class="panel-control">
-      <div id="selector-dif-viaje" class="selector-dificultad"></div>
-      <div class="stats-live">
-        <span>Escudo: <strong id="via-vidas">🛡️🛡️🛡️</strong></span>
-        <span>Cristales: <strong id="via-puntos">0 💎</strong></span>
+    <div class="juego-layout-con-brisa">
+      <div class="brisa-companion-lateral" title="Brisa te acompaña">
+        <span class="companion-emoji">🐶👨‍🚀</span>
+        <div class="companion-burbuja">¡Excelente salto espacial, Oscar! 🚀</div>
       </div>
-    </div>
-    <div class="viaje-contenedor">
-      <canvas id="canvas-viaje" width="900" height="460"></canvas>
-      <button id="btn-viaje-saltar" class="btn btn-grande btn-salto-espacial">🚀 ¡SALTAR ASTRONAUTA! (Espacio / Clic)</button>
-      <div id="viaje-overlay" class="viaje-overlay-inicio">
-        <h3>🚀 Misión Espacial Star Trek de Oscar</h3>
-        <p>Oscar el Astronauta avanza por la estación espacial. Tocá el botón gigante, hacé clic en la pantalla o presioná la Barra Espaciadora para SALTAR asteroides, láseres y minas espaciales.</p>
-        <button id="btn-viaje-iniciar" class="btn btn-grande">🚀 Iniciar Misión Espacial</button>
+      <div class="juego-area-principal">
+        <div class="panel-control">
+          <div id="selector-dif-viaje" class="selector-dificultad"></div>
+          <div class="stats-live">
+            <span>Escudo: <strong id="via-vidas">🛡️🛡️🛡️</strong></span>
+            <span>Cristales: <strong id="via-puntos">0 💎</strong></span>
+          </div>
+        </div>
+        <div class="viaje-contenedor">
+          <canvas id="canvas-viaje" width="900" height="460"></canvas>
+          <button id="btn-viaje-saltar" class="btn btn-grande btn-salto-espacial">🚀 ¡SALTAR ASTRONAUTA! (Espacio / Clic)</button>
+          <div id="viaje-overlay" class="viaje-overlay-inicio">
+            <h3>🚀 Misión Espacial Star Trek de Oscar</h3>
+            <p>Oscar el Astronauta avanza por la estación espacial a un ritmo suave y pausado. Tocá el botón gigante, hacé clic en la pantalla o presioná la Barra Espaciadora para SALTAR asteroides, láseres y minas espaciales.</p>
+            <button id="btn-viaje-iniciar" class="btn btn-grande">🚀 Iniciar Misión Espacial</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============ JUEGO: PALABRAS ============ -->
   <section id="pantalla-palabras" class="pantalla">
-    <div class="panel-control">
-      <div id="selector-dif-palabras" class="selector-dificultad"></div>
-      <div class="stats-live">
-        <span>Nivel: <strong id="pal-nivel-nombre">Fácil (4 letras)</strong></span>
-        <span>Progreso: <strong id="pal-progreso">1/5</strong></span>
+    <div class="juego-layout-con-brisa">
+      <div class="brisa-companion-lateral" title="Brisa te acompaña">
+        <span class="companion-emoji">🐶</span>
+        <div class="companion-burbuja">¡Formemos palabras juntos, Oscar! 🔤</div>
       </div>
-    </div>
-    <div class="contenedor-palabras">
-      <div id="palabra-pista" class="pista-palabra"></div>
-      <div id="palabra-casillas" class="casillas-palabra"></div>
-      <div id="palabra-teclado" class="teclado-palabra"></div>
-      <button id="btn-palabra-borrar" class="btn btn-suave btn-mini" style="margin-top: 15px;">⌫ Borrar Letra</button>
+      <div class="juego-area-principal">
+        <div class="panel-control">
+          <div id="selector-dif-palabras" class="selector-dificultad"></div>
+          <div class="stats-live">
+            <span>Nivel: <strong id="pal-nivel-nombre">Fácil (4 letras)</strong></span>
+            <span>Progreso: <strong id="pal-progreso">1/5</strong></span>
+          </div>
+        </div>
+        <div class="contenedor-palabras">
+          <div id="palabra-pista" class="pista-palabra"></div>
+          <div id="palabra-casillas" class="casillas-palabra"></div>
+          <div id="palabra-teclado" class="teclado-palabra"></div>
+          <button id="btn-palabra-borrar" class="btn btn-suave btn-mini" style="margin-top: 15px;">⌫ Borrar Letra</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -234,7 +277,7 @@
 
 <!-- ============ MODALES GENERALES ============ -->
 <div id="modal-resumen" class="modal">
-  <div class="modal-caja">
+  <div class="modal-caja modal-resumen-caja">
     <h2 id="resumen-titulo">¡Excelente Trabajo!</h2>
     <div id="resumen-stats" class="res-stats"></div>
     <p id="resumen-mensaje" class="resumen-mensaje"></p>
