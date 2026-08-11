@@ -7,89 +7,100 @@
 </head>
 <body>
 
+<!-- ============ PRESENTACIÓN / INTRO INICIAL ============ -->
+<div id="pantalla-presentacion" class="intro-overlay activa">
+  <div class="intro-card">
+    <div class="intro-escena">
+      <div class="intro-particulas"></div>
+      <div class="intro-mascota" id="intro-brisa-anim">🐶</div>
+      <h1 class="intro-titulo">Bienvenido Oscar ✨</h1>
+      <p class="intro-subtitulo">Tu programa personalizado de ejercitación cognitiva y agilidad visual</p>
+    </div>
+    <button id="btn-comenzar-intro" class="btn btn-grande btn-intro">🚀 Comenzar Sesión de Hoy</button>
+  </div>
+</div>
+
+<!-- ============ BARRA SUPERIOR ============ -->
 <header id="barra-juego" class="barra oculto">
-  <div class="titulo-area">
-    <h2 id="barra-titulo">Rehabilitación Cognitiva</h2>
+  <div class="grupo-izquierda">
+    <h2 id="barra-titulo">Juego</h2>
+    <button id="btn-mascota-brisa" class="btn-brisa-badge" title="Hablar con Brisa">
+      <span class="brisa-icon">🐶</span>
+      <span class="brisa-texto">Brisa</span>
+    </button>
   </div>
   <div class="grupo-derecha">
-    <button id="btn-sonido-barra" class="btn-barra" title="Alternar Sonido">🔊 Sonido: ON</button>
-    <button id="btn-musica-barra" class="btn-barra" title="Alternar Música">🎵 Música: ON</button>
-    <button id="btn-barra-reiniciar" class="btn-barra btn-barra-secundario" title="Reiniciar nivel actual">🔄 Reiniciar Nivel</button>
-    <button id="btn-barra-menu" class="btn-barra btn-barra-suave" title="Volver al menú principal">🏠 Ir a Inicio</button>
-    <button id="btn-pausa" class="btn-barra btn-barra-pausa" title="Pausar el juego">⏸️ Pausa</button>
-    <button id="btn-salir" class="btn-barra btn-barra-peligro" title="Salir al menú">🚪 Salir</button>
+    <button id="btn-sonido-barra" class="toggle-sonido activo" aria-label="Sonido">🔊</button>
+    <button id="btn-barra-reiniciar" class="btn btn-mini btn-secundario" aria-label="Reiniciar nivel">🔄</button>
+    <button id="btn-barra-menu" class="btn btn-mini btn-suave" aria-label="Volver al menú">🏠</button>
+    <button id="btn-pausa" class="btn btn-mini">⏸️ Pausa</button>
+    <button id="btn-salir" class="btn btn-mini btn-peligro-suave">🚪 Salir</button>
   </div>
 </header>
 
 <main>
   <!-- ============ MENÚ PRINCIPAL ============ -->
   <section id="pantalla-menu" class="pantalla activa">
-    
-    <!-- Banner Introductorio Animado / Bienvenida -->
-    <div class="hero-banner">
-      <div class="hero-video-container">
-        <!-- Video decorativo Sci-Fi / Neuroplasticidad -->
-        <div class="video-overlay"></div>
-        <div class="hero-content">
-          <span class="badge-bienvenida">🌟 Centro de Rehabilitación Personalizado</span>
-          <h1 class="titulo-pantalla">¡Hola Oscar! 👋</h1>
-          <p class="subtitulo-pantalla">Elegí el ejercicio cognitivo de hoy. Cada sesión estimula tu cerebro y fortalece tu recuperación.</p>
-        </div>
+    <div class="encabezado-menu">
+      <div class="saludo-box">
+        <h1 class="titulo-pantalla">¡Hola Oscar! 👋</h1>
+        <button id="btn-brisa-menu" class="btn-brisa-avatar" aria-label="Interactuar con Brisa">
+          <span class="avatar-emoji">🐶</span>
+          <span class="avatar-tooltip">¡Hola Oscar! Tocame para hablar</span>
+        </button>
       </div>
+      <p class="subtitulo-pantalla">Elegí el ejercicio que quieras realizar hoy para ejercitar tu mente:</p>
     </div>
 
-    <!-- Menú de Selección de Juegos (Centrado) -->
-    <div class="contenedor-menu-centrado">
-      <div class="menu-juegos">
-        <button id="btn-juego-memoria" class="juego-card jc-memoria">
-          <div class="card-icon">🧠</div>
-          <div class="info">
-            <h3>Memoria Visual IA</h3>
-            <p>Encontrá las parejas con ilustraciones de alta calidad.</p>
-          </div>
-        </button>
+    <div class="menu-juegos">
+      <button id="btn-juego-memoria" class="juego-card jc-memoria">
+        <span class="emoji">🖼️</span>
+        <div class="info">
+          <h3>Memoria Visual (Ilustraciones)</h3>
+          <p>Encontrá las parejas de ilustraciones en tarjetas grandes.</p>
+        </div>
+      </button>
 
-        <button id="btn-juego-atencion" class="juego-card jc-atencion">
-          <div class="card-icon">👀</div>
-          <div class="info">
-            <h3>Atención Visual</h3>
-            <p>Grillas de 3x3, 4x4 y 5x5. ¡Descubrí la figura diferente!</p>
-          </div>
-        </button>
+      <button id="btn-juego-atencion" class="juego-card jc-atencion">
+        <span class="emoji">👀</span>
+        <div class="info">
+          <h3>Atención Visual</h3>
+          <p>Descubrí la figura diferente en la grilla equilibrada.</p>
+        </div>
+      </button>
 
-        <button id="btn-juego-coordinacion" class="juego-card jc-coordinacion">
-          <div class="card-icon">🎈</div>
-          <div class="info">
-            <h3>Globos y Reflejos</h3>
-            <p>Tocá los globos flotantes y hacelos explotar.</p>
-          </div>
-        </button>
+      <button id="btn-juego-coordinacion" class="juego-card jc-coordinacion">
+        <span class="emoji">🎈</span>
+        <div class="info">
+          <h3>Explotar Globos</h3>
+          <p>Tocá los globos de colores antes de que se eleven.</p>
+        </div>
+      </button>
 
-        <button id="btn-juego-viaje" class="juego-card jc-viaje">
-          <div class="card-icon">👨‍🚀</div>
-          <div class="info">
-            <h3>Viaje Espacial Sci-Fi</h3>
-            <p>Plataformas estilo Mario Bros en ambiente Star Trek.</p>
-          </div>
-        </button>
+      <button id="btn-juego-viaje" class="juego-card jc-viaje">
+        <span class="emoji">🍄</span>
+        <div class="info">
+          <h3>Aventura de Plataformas (Mario Bros 2D)</h3>
+          <p>Camina sobre la plataforma, salta obstáculos y junta monedas.</p>
+        </div>
+      </button>
 
-        <button id="btn-juego-palabras" class="juego-card jc-palabras">
-          <div class="card-icon">🔤</div>
-          <div class="info">
-            <h3>Desafío de Palabras</h3>
-            <p>Palabras de 4, 5 y 6 letras con pistas y amplia variedad.</p>
-          </div>
-        </button>
-      </div>
+      <button id="btn-juego-palabras" class="juego-card jc-palabras">
+        <span class="emoji">🔤</span>
+        <div class="info">
+          <h3>Desafío de Palabras</h3>
+          <p>Armá palabras de 4, 5 o 6 letras según el nivel elegido.</p>
+        </div>
+      </button>
     </div>
 
     <div class="menu-inferior">
       <button id="btn-ir-progreso" class="btn btn-suave">📊 Ver Mi Progreso</button>
-      <button id="btn-ir-config" class="btn btn-suave">⚙️ Configuración Terapéutica</button>
+      <button id="btn-ir-config" class="btn btn-suave">⚙️ Opciones Terapéuticas</button>
     </div>
   </section>
 
-  <!-- ============ JUEGO 1: MEMORIA ============ -->
+  <!-- ============ JUEGO: MEMORIA ============ -->
   <section id="pantalla-memoria" class="pantalla">
     <div class="panel-control">
       <div id="selector-dif-memoria" class="selector-dificultad"></div>
@@ -101,7 +112,7 @@
     <div id="grid-memoria" class="grid-memoria"></div>
   </section>
 
-  <!-- ============ JUEGO 2: ATENCIÓN ============ -->
+  <!-- ============ JUEGO: ATENCIÓN ============ -->
   <section id="pantalla-atencion" class="pantalla">
     <div class="panel-control">
       <div id="selector-dif-atencion" class="selector-dificultad"></div>
@@ -110,11 +121,13 @@
         <span>Puntos: <strong id="ate-puntos">0</strong></span>
       </div>
     </div>
-    <div id="instruccion-atencion" class="instruccion">Tocá la figura diferente. ¡Tómate tu tiempo Oscar!</div>
-    <div id="grid-atencion" class="grid-atencion guia-hemianopsia-izq"></div>
+    <div id="instruccion-atencion" class="instruccion">Tocá la figura diferente. ¡Tómate tu tiempo!</div>
+    <div class="atencion-contenedor-centrado">
+      <div id="grid-atencion" class="grid-atencion guia-hemianopsia-izq"></div>
+    </div>
   </section>
 
-  <!-- ============ JUEGO 3: COORDINACIÓN (GLOBOS) ============ -->
+  <!-- ============ JUEGO: GLOBOS / COORDINACIÓN ============ -->
   <section id="pantalla-coordinacion" class="pantalla">
     <div class="panel-control">
       <div id="selector-dif-coordinacion" class="selector-dificultad"></div>
@@ -123,48 +136,51 @@
         <span>Escapados: <strong id="coo-escapados">0</strong></span>
       </div>
     </div>
-    <div id="area-coordinacion" class="area-coordinacion guia-hemianopsia-izq"></div>
+    <div class="coordinacion-marco-seguro">
+      <div id="area-coordinacion" class="area-coordinacion guia-hemianopsia-izq"></div>
+    </div>
   </section>
 
-  <!-- ============ JUEGO 4: VIAJE ESPACIAL ============ -->
+  <!-- ============ JUEGO: MARIO BROS 2D PLATAFORMA ============ -->
   <section id="pantalla-viaje" class="pantalla">
     <div class="panel-control">
       <div id="selector-dif-viaje" class="selector-dificultad"></div>
       <div class="stats-live">
-        <span>Escudo: <strong id="via-vidas">💙💙💙</strong></span>
-        <span>Cristales: <strong id="via-puntos">0</strong></span>
+        <span>Vidas: <strong id="via-vidas">❤️❤️❤️</strong></span>
+        <span>Monedas: <strong id="via-puntos">0</strong></span>
       </div>
     </div>
     <div class="viaje-contenedor">
-      <canvas id="canvas-viaje" width="850" height="480"></canvas>
+      <canvas id="canvas-viaje" width="800" height="400"></canvas>
       <div id="viaje-overlay" class="viaje-overlay-inicio">
-        <h3>🖖 Misión Espacial de Oscar</h3>
-        <p>Acompañá al astronauta caminando por la nave. Tocá la pantalla o presioná la barra espaciadora para saltar obstáculos y recolectar cristales de energía.</p>
-        <button id="btn-viaje-iniciar" class="btn btn-scifi">🚀 Iniciar Misión</button>
+        <h3>🍄 Aventura de Plataforma de Oscar</h3>
+        <p>Oscar camina automáticamente. Tocá la pantalla o presioná la Barra Espaciadora para SALTAR tuberías y bloques.</p>
+        <button id="btn-viaje-iniciar" class="btn btn-grande">🍄 Iniciar Aventura</button>
       </div>
     </div>
   </section>
 
-  <!-- ============ JUEGO 5: PALABRAS ============ -->
+  <!-- ============ JUEGO: PALABRAS ============ -->
   <section id="pantalla-palabras" class="pantalla">
     <div class="panel-control">
       <div id="selector-dif-palabras" class="selector-dificultad"></div>
       <div class="stats-live">
+        <span>Nivel: <strong id="pal-nivel-nombre">Fácil (4 letras)</strong></span>
         <span>Progreso: <strong id="pal-progreso">1/5</strong></span>
-        <span>Puntos: <strong id="pal-puntos">0</strong></span>
       </div>
     </div>
     <div class="contenedor-palabras">
       <div id="palabra-pista" class="pista-palabra"></div>
       <div id="palabra-casillas" class="casillas-palabra"></div>
       <div id="palabra-teclado" class="teclado-palabra"></div>
+      <button id="btn-palabra-borrar" class="btn btn-suave btn-mini" style="margin-top: 15px;">⌫ Borrar Letra</button>
     </div>
   </section>
 
   <!-- ============ PROGRESO ============ -->
   <section id="pantalla-progreso" class="pantalla">
-    <h2>📊 Informe de Progreso de Oscar</h2>
-    <p class="subtitulo">Registro completo de sesiones clínicas para compartir con los kinesiólogos y neurólogos.</p>
+    <h2>📊 Progreso de Oscar</h2>
+    <p class="subtitulo">Registro acumulado para seguimiento con el equipo de salud.</p>
     
     <div id="progreso-resumen-general" class="tarjeta-resumen-general"></div>
     <div id="progreso-historial" class="historial-sesiones"></div>
@@ -177,39 +193,23 @@
 
   <!-- ============ CONFIGURACIÓN ============ -->
   <section id="pantalla-config" class="pantalla">
-    <h2>⚙️ Opciones Terapéuticas Personalizadas</h2>
-    <p class="subtitulo">Ajustá las preferencias de estímulo para la recuperación de Oscar.</p>
+    <h2>⚙️ Opciones Terapéuticas</h2>
+    <p class="subtitulo">Adaptaciones especiales diseñadas para Oscar.</p>
 
     <div class="lista-config">
       <label class="item-config">
         <input type="checkbox" id="chk-hemianopsia">
         <div class="txt">
           <strong>👁️‍🗨️ Modo Hemianopsia Izquierda</strong>
-          <p>Prioriza la aparición de elementos en el lado izquierdo y activa la guía luminosa de barrido visual.</p>
-        </div>
-      </label>
-
-      <label class="item-config">
-        <input type="checkbox" id="chk-cimt">
-        <div class="txt">
-          <strong>✋ Modo CIMT (Mano Izquierda)</strong>
-          <p>Suma bonificaciones de puntos al utilizar el brazo/mano afectado durante la sesión.</p>
+          <p>Prioriza la aparición de elementos en el lado izquierdo con marcas visuales de escaneo.</p>
         </div>
       </label>
 
       <label class="item-config">
         <input type="checkbox" id="chk-multi">
         <div class="txt">
-          <strong>🔊 Retroalimentación por Voz y Audio</strong>
-          <p>Locus de voz personalizado que anima a Oscar y emite respuestas multisensoriales.</p>
-        </div>
-      </label>
-
-      <label class="item-config">
-        <input type="checkbox" id="chk-enfoque">
-        <div class="txt">
-          <strong>🎯 Modo Enfoque Simplificado</strong>
-          <p>Reduce distracciones secundarias para evitar fatiga cognitiva.</p>
+          <strong>🔊 Mensajes de Voz de Brisa</strong>
+          <p>Activa la voz de aliento de Brisa para guiar y felicitar a Oscar.</p>
         </div>
       </label>
     </div>
@@ -218,25 +218,20 @@
   </section>
 </main>
 
-<!-- ============ MASCOTA INTERACTIVA BRISA ============ -->
-<div id="mascota-brisa" class="mascota-widget" title="¡Tocá a Brisa para recibir un consejo!">
-  <div class="brisa-avatar">🐩</div>
-  <div class="brisa-badge">Brisa</div>
-</div>
-
-<!-- Modal de Consejo de Brisa -->
+<!-- ============ DIÁLOGO DE BRISA ============ -->
 <div id="modal-brisa" class="modal">
   <div class="modal-caja modal-brisa-caja">
-    <div class="brisa-header">
-      <span class="brisa-icon-lg">🐩</span>
-      <h3>Consejo de Brisa para Oscar</h3>
+    <div class="brisa-avatar-grande">🐶</div>
+    <h2 id="brisa-titulo">¡Hola Oscar! Soy Brisa 🐾</h2>
+    <p id="brisa-mensaje" class="brisa-mensaje-texto">"¡Estoy muy contenta de acompañarte hoy! Cada paso que das fortalece tu mente."</p>
+    <div class="modal-botones">
+      <button id="btn-brisa-hablar-otra" class="btn btn-secundario">🗣️ Escuchar otra frase</button>
+      <button id="btn-brisa-cerrar" class="btn btn-suave">👍 ¡Gracias Brisa!</button>
     </div>
-    <p id="brisa-consejo-texto" class="brisa-texto"></p>
-    <button id="btn-brisa-cerrar" class="btn btn-secundario">¡Gracias Brisa! 🐾</button>
   </div>
 </div>
 
-<!-- ============ MODALES DE SISTEMA ============ -->
+<!-- ============ MODALES GENERALES ============ -->
 <div id="modal-resumen" class="modal">
   <div class="modal-caja">
     <h2 id="resumen-titulo">¡Excelente Trabajo!</h2>
@@ -244,7 +239,7 @@
     <p id="resumen-mensaje" class="resumen-mensaje"></p>
     <div class="modal-botones">
       <button id="btn-resumen-repetir" class="btn btn-secundario">🔄 Repetir Ejercicio</button>
-      <button id="btn-resumen-menu" class="btn btn-suave">🏠 Menú Principal</button>
+      <button id="btn-resumen-menu" class="btn btn-suave">🏠 Volver al Menú</button>
     </div>
   </div>
 </div>
