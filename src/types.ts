@@ -9,7 +9,10 @@ export interface EstadoGlobal {
   terminado: boolean;
 }
 
-export interface Stat { etiqueta: string; valor: string | number; }
+export interface Stat {
+  etiqueta: string;
+  valor: string | number;
+}
 
 export interface DatosResumen {
   titulo: string;
@@ -45,24 +48,52 @@ export interface ConfigTerapia {
 }
 
 export interface ConfigViaje {
-  velBase: number; velMax: number; acel: number;
-  obsMin: number; obsMax: number; estMin: number; estMax: number;
-  duracion: number; vidas: number;
+  velBase: number;
+  velMax: number;
+  acel: number;
+  obsMin: number;
+  obsMax: number;
+  estMin: number;
+  estMax: number;
+  duracion: number;
+  vidas: number;
 }
 
 export interface Obstaculo {
-  x: number; y: number; w: number; h: number;
-  tipo: 'roca' | 'alien'; emoji: string;
-  contado: boolean; golpeado: boolean;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  tipo: 'roca' | 'alien';
+  emoji: string;
+  contado: boolean;
+  golpeado: boolean;
 }
 
-export interface EstrellaItem { x: number; y: number; r: number; tomada: boolean; }
-export interface FondoEstrella { x: number; y: number; r: number; v: number; }
-export interface ItemMemoria { tipo: 'foto' | 'emoji'; src: string; id: number; }
+export interface EstrellaItem {
+  x: number;
+  y: number;
+  r: number;
+  tomada: boolean;
+}
+
+export interface FondoEstrella {
+  x: number;
+  y: number;
+  tam: number;
+  v: number;
+}
+
+export interface ItemMemoria {
+  id: number;
+  valor: string;
+  esFoto: boolean;
+  descubierta: boolean;
+  emparejada: boolean;
+}
 
 export interface Juego {
-  comenzar(n: Dificultad): void | Promise<void>;
-  pausar(): void;
-  reanudar(): void;
-  detener(): void;
+  id: JuegoId;
+  comenzar: (dif: Dificultad) => void;
+  detener: () => void;
 }
