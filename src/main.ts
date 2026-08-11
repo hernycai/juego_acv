@@ -1,8 +1,7 @@
 import './style.css';
 import type {
-  Dificultad, JuegoId, EstadoGlobal, Stat, DatosResumen,
-  Sesion, ConfigTerapia, ConfigViaje, Obstaculo, EstrellaItem,
-  FondoEstrella, ItemMemoria
+  Dificultad, JuegoId, EstadoGlobal, DatosResumen,
+  Sesion, ConfigTerapia, Obstaculo, EstrellaItem, ItemMemoria
 } from './types';
 
 // ============================================================
@@ -62,9 +61,9 @@ class GeneradorSonido {
     if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
-    osc.frequency.setValueAtTime(523.25, this.ctx.currentTime); // C5
-    osc.frequency.setValueAtTime(659.25, this.ctx.currentTime + 0.08); // E5
-    osc.frequency.setValueAtTime(783.99, this.ctx.currentTime + 0.16); // G5
+    osc.frequency.setValueAtTime(523.25, this.ctx.currentTime);
+    osc.frequency.setValueAtTime(659.25, this.ctx.currentTime + 0.08);
+    osc.frequency.setValueAtTime(783.99, this.ctx.currentTime + 0.16);
     gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
     osc.connect(gain);
@@ -112,7 +111,6 @@ const Config: ConfigTerapia = {
   fotos: []
 };
 
-// Cargar configuración guardada
 try {
   const guardado = localStorage.getItem('oscar_config_terapia');
   if (guardado) Object.assign(Config, JSON.parse(guardado));
@@ -122,7 +120,6 @@ function guardarConfig() {
   localStorage.setItem('oscar_config_terapia', JSON.stringify(Config));
 }
 
-// Selector Helper
 const $ = <T extends HTMLElement = HTMLElement>(sel: string): T => {
   const el = document.querySelector<T>(sel);
   if (!el) throw new Error(`Elemento no encontrado: ${sel}`);
@@ -238,11 +235,9 @@ function exportarProgreso() {
     '==================================================',
     'REPORTE DE REHABILITACIÓN COGNITIVA - PACIENTE OSCAR',
     `Fecha del reporte: ${new Date().toLocaleString()}`,
-    '==================================================
-',
+    '==================================================\n',
     `Total de sesiones: ${historial.length}`,
-    '
-DETALLE DE SESIONES:'
+    '\nDETALLE DE SESIONES:'
   ];
 
   historial.forEach((s, idx) => {
@@ -251,8 +246,7 @@ DETALLE DE SESIONES:'
     );
   });
 
-  const blob = new Blob([lineas.join('
-')], { type: 'text/plain;charset=utf-8' });
+  const blob = new Blob([lineas.join('\n')], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -454,10 +448,9 @@ const Atencion = {
     const baseEmoji = '🟢';
     const distractorEmoji = '🔴';
 
-    // Sesgo hemianopsia (70% spawn a la izquierda)
     let target = Math.floor(Math.random() * cantidad);
     if (Config.hemianopsia && Math.random() < 0.7) {
-      target = 0; // Primera columna (lado izquierdo)
+      target = 0;
     }
     this.targetIdx = target;
 
@@ -545,10 +538,9 @@ const Coordinacion = {
     star.className = 'estrella-target';
     star.textContent = '⭐';
 
-    // Sesgo para lado izquierdo si hemianopsia activa
     let posX = Math.random() * 80 + 10;
     if (Config.hemianopsia && Math.random() < 0.7) {
-      posX = Math.random() * 40 + 5; // 5% a 45% del ancho (lado izquierdo)
+      posX = Math.random() * 40 + 5;
     }
 
     const posY = Math.random() * 70 + 15;
@@ -583,7 +575,7 @@ const Coordinacion = {
 
     mostrarResumen({
       titulo: '✋ ¡Muy Bien Oscar!',
-      mensaje: 'Escribiste y reaccionaste con gran destreza.',
+      mensaje: 'Reaccionaste con gran destreza.',
       stats: [
         { etiqueta: 'Estrellas Atrapadas', valor: `${this.aciertos}/${this.maxEstrellas}` },
         { etiqueta: 'Puntaje Final', valor: `${pts} pts` }
@@ -605,7 +597,7 @@ const Coordinacion = {
 // ============================================================
 const Viaje = {
   canvas: null as HTMLCanvasElement | null,
-  ctx: CanvasRenderingContext2D | null = null,
+  ctx: null as CanvasRenderingContext2D | null,
   animId: 0,
   jugadorY: 200,
   velocidadY: 0,
@@ -644,7 +636,6 @@ const Viaje = {
   loop() {
     if (!this.running || !this.ctx || !this.canvas) return;
 
-    // Actualizar física
     this.velocidadY += this.gravedad;
     this.jugadorY += this.velocidadY;
 
@@ -657,7 +648,6 @@ const Viaje = {
       this.velocidadY = 0;
     }
 
-    // Spawn obstáculos
     if (Math.random() < 0.02) {
       this.obstaculos.push({
         x: this.canvas.width + 30,
@@ -671,7 +661,6 @@ const Viaje = {
       });
     }
 
-    // Spawn estrellas
     if (Math.random() < 0.03) {
       this.estrellas.push({
         x: this.canvas.width + 30,
@@ -681,23 +670,19 @@ const Viaje = {
       });
     }
 
-    // Limpiar canvas
     this.ctx.fillStyle = '#111827';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Dibujar Jugador
     this.ctx.font = '36px sans-serif';
     this.ctx.textAlign = 'center';
     this.ctx.textBaseline = 'middle';
     this.ctx.fillText('🚀', 100, this.jugadorY);
 
-    // Mover y dibujar obstáculos
     for (let i = this.obstaculos.length - 1; i >= 0; i--) {
       const obs = this.obstaculos[i];
       obs.x -= 4;
       this.ctx.fillText(obs.emoji, obs.x, obs.y);
 
-      // Colisión
       const dist = Math.hypot(100 - obs.x, this.jugadorY - obs.y);
       if (dist < 32 && !obs.golpeado) {
         obs.golpeado = true;
@@ -714,7 +699,6 @@ const Viaje = {
       if (obs.x < -40) this.obstaculos.splice(i, 1);
     }
 
-    // Mover y dibujar estrellas
     for (let i = this.estrellas.length - 1; i >= 0; i--) {
       const est = this.estrellas[i];
       est.x -= 4;
@@ -744,9 +728,7 @@ const Viaje = {
     mostrarResumen({
       titulo: '🚀 ¡Excelente Vuelo!',
       mensaje: 'Navegaste por el espacio y sumaste puntos acumulados.',
-      stats: [
-        { etiqueta: 'Puntaje Espacial', valor: `${this.puntos} pts` }
-      ],
+      stats: [{ etiqueta: 'Puntaje Espacial', valor: `${this.puntos} pts` }],
       juego: 'viaje',
       nivel: Estado.dificultad,
       exitoso: true,
@@ -864,6 +846,26 @@ const Palabras = {
 // INICIALIZACIÓN DE EVENTOS GLOBAL Y BINDINGS
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+  $('#btn-sonido-barra').addEventListener('click', (e) => {
+    Sonido.activo = !Sonido.activo;
+    (e.currentTarget as HTMLElement).textContent = Sonido.activo ? '🔊' : '🔇';
+  });
+
+  $('#btn-barra-reiniciar').addEventListener('click', () => {
+    Sonido.click();
+    if (Estado.juegoActivo === 'memoria') Memoria.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'atencion') Atencion.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'coordinacion') Coordinacion.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'viaje') Viaje.comenzar(Estado.dificultad);
+    else if (Estado.juegoActivo === 'palabras') Palabras.comenzar(Estado.dificultad);
+  });
+
+  $('#btn-salir').addEventListener('click', () => {
+    Sonido.click();
+    Memoria.detener(); Atencion.detener(); Coordinacion.detener(); Viaje.detener(); Palabras.detener();
+    mostrarPantalla('menu');
+  });
+
   // Navegación Menú
   $('#btn-juego-memoria').addEventListener('click', () => { Sonido.click(); mostrarPantalla('memoria'); Memoria.comenzar(Estado.dificultad); });
   $('#btn-juego-atencion').addEventListener('click', () => { Sonido.click(); mostrarPantalla('atencion'); Atencion.comenzar(Estado.dificultad); });
