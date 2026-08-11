@@ -1,5 +1,6 @@
 export type Dificultad = 'facil' | 'medio' | 'dificil';
 export type JuegoId = 'memoria' | 'atencion' | 'coordinacion' | 'viaje' | 'palabras';
+export type Lado = 'izq' | 'der';
 
 export interface EstadoGlobal {
   dificultad: Dificultad;
@@ -21,6 +22,8 @@ export interface DatosResumen {
   nivel: Dificultad;
   exitoso: boolean;
   puntaje: number;
+  tiempoIzq?: number;
+  tiempoDer?: number;
 }
 
 export interface Sesion {
@@ -31,34 +34,42 @@ export interface Sesion {
   exitoso: boolean;
   duracion: number;
   stats: Record<string, string | number>;
+  tiempoIzq: number | null;
+  tiempoDer: number | null;
 }
 
 export interface ConfigTerapia {
   hemianopsia: boolean;
   cimt: boolean;
+  saliencia: boolean;
   multi: boolean;
   enfoque: boolean;
+  fotos: string[];
 }
 
-export interface GloboItem {
-  id: number;
+export interface Obstaculo {
   x: number;
   y: number;
-  color: string;
-  svgIcon: string;
-  tocado: boolean;
+  w: number;
+  h: number;
+  tipo: 'roca' | 'alien';
+  emoji: string;
+  contado: boolean;
+  golpeado: boolean;
+}
+
+export interface EstrellaItem {
+  x: number;
+  y: number;
+  r: number;
+  tomada: boolean;
 }
 
 export interface ItemMemoria {
   id: number;
-  valor: string; // SVG data URI or title
-  nombre: string;
+  valor: string;
+  esFoto: boolean;
   descubierta: boolean;
   emparejada: boolean;
 }
 
-export interface ItemAtencion {
-  id: number;
-  svg: string;
-  esDiferente: boolean;
-}
