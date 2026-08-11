@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rehabilitación Cognitiva — Oscar</title>
+</head>
+<body>
+
+<header id="barra-juego" class="barra oculto">
+  <h2 id="barra-titulo">Juego</h2>
+  <div class="grupo-derecha">
+    <button id="btn-sonido-barra" class="toggle-sonido activo" aria-label="Sonido">🔊</button>
+    <button id="btn-barra-reiniciar" class="btn btn-mini btn-secundario" aria-label="Reiniciar nivel">🔄</button>
+    <button id="btn-barra-menu" class="btn btn-mini btn-suave" aria-label="Volver al menú">🏠</button>
+    <button id="btn-pausa" class="btn btn-mini">⏸️ Pausa</button>
+    <button id="btn-salir" class="btn btn-mini btn-peligro-suave">🚪 Salir</button>
+  </div>
+</header>
+
+<main>
+  <!-- ============ MENÚ PRINCIPAL ============ -->
+  <section id="pantalla-menu" class="pantalla activa">
+    <div class="encabezado-menu">
+      <h1 class="titulo-pantalla">¡Hola Oscar! 👋</h1>
+      <p class="subtitulo-pantalla">Elegí el ejercicio cognitivo que quieras realizar hoy:</p>
+    </div>
+
+    <div class="menu-juegos">
+      <button id="btn-juego-memoria" class="juego-card jc-memoria">
+        <span class="emoji">🧠</span>
+        <div class="info">
+          <h3>Memoria de Parejas</h3>
+          <p>Encontrá las cartas iguales a tu propio ritmo.</p>
+        </div>
+      </button>
+
+      <button id="btn-juego-atencion" class="juego-card jc-atencion">
+        <span class="emoji">👀</span>
+        <div class="info">
+          <h3>Atención Visual</h3>
+          <p>Descubrí el elemento diferente en pantalla.</p>
+        </div>
+      </button>
+
+      <button id="btn-juego-coordinacion" class="juego-card jc-coordinacion">
+        <span class="emoji">✋</span>
+        <div class="info">
+          <h3>Coordinación y Reflejos</h3>
+          <p>Tocá las estrellas que van apareciendo.</p>
+        </div>
+      </button>
+
+      <button id="btn-juego-viaje" class="juego-card jc-viaje">
+        <span class="emoji">🚀</span>
+        <div class="info">
+          <h3>Viaje Espacial</h3>
+          <p>Esquivá obstáculos y junta estrellas brillantes.</p>
+        </div>
+      </button>
+
+      <button id="btn-juego-palabras" class="juego-card jc-palabras">
+        <span class="emoji">🔤</span>
+        <div class="info">
+          <h3>Desafío de Palabras</h3>
+          <p>Formá las palabras correctas ordenando letras.</p>
+        </div>
+      </button>
+    </div>
+
+    <div class="menu-inferior">
+      <button id="btn-ir-progreso" class="btn btn-suave">📊 Ver Mi Progreso</button>
+      <button id="btn-ir-config" class="btn btn-suave">⚙️ Configuración Terapéutica</button>
+    </div>
+  </section>
+
+  <!-- ============ JUEGO: MEMORIA ============ -->
+  <section id="pantalla-memoria" class="pantalla">
+    <div class="panel-control">
+      <div id="selector-dif-memoria" class="selector-dificultad"></div>
+      <div class="stats-live">
+        <span>Intentos: <strong id="mem-intentos">0</strong></span>
+        <span>Tiempo: <strong id="mem-tiempo">00:00</strong></span>
+      </div>
+    </div>
+    <div id="grid-memoria" class="grid-memoria"></div>
+  </section>
+
+  <!-- ============ JUEGO: ATENCIÓN ============ -->
+  <section id="pantalla-atencion" class="pantalla">
+    <div class="panel-control">
+      <div id="selector-dif-atencion" class="selector-dificultad"></div>
+      <div class="stats-live">
+        <span>Ronda: <strong id="ate-ronda">1/5</strong></span>
+        <span>Puntos: <strong id="ate-puntos">0</strong></span>
+      </div>
+    </div>
+    <div id="instruccion-atencion" class="instruccion">Tocá la figura diferente. ¡Tómate tu tiempo!</div>
+    <div id="grid-atencion" class="grid-atencion guia-hemianopsia-izq"></div>
+  </section>
+
+  <!-- ============ JUEGO: COORDINACIÓN ============ -->
+  <section id="pantalla-coordinacion" class="pantalla">
+    <div class="panel-control">
+      <div id="selector-dif-coordinacion" class="selector-dificultad"></div>
+      <div class="stats-live">
+        <span>Aciertos: <strong id="coo-aciertos">0</strong></span>
+        <span>Escapados: <strong id="coo-escapados">0</strong></span>
+      </div>
+    </div>
+    <div id="area-coordinacion" class="area-coordinacion guia-hemianopsia-izq"></div>
+  </section>
+
+  <!-- ============ JUEGO: VIAJE ESPACIAL ============ -->
+  <section id="pantalla-viaje" class="pantalla">
+    <div class="panel-control">
+      <div id="selector-dif-viaje" class="selector-dificultad"></div>
+      <div class="stats-live">
+        <span>Vidas: <strong id="via-vidas">❤️❤️❤️</strong></span>
+        <span>Puntos: <strong id="via-puntos">0</strong></span>
+      </div>
+    </div>
+    <div class="viaje-contenedor">
+      <canvas id="canvas-viaje" width="800" height="450"></canvas>
+      <div id="viaje-overlay" class="viaje-overlay-inicio">
+        <h3>🚀 Viaje Espacial de Oscar</h3>
+        <p>Tocá la pantalla o presioná la barra espaciadora para saltar y esquivar los obstáculos.</p>
+        <button id="btn-viaje-iniciar" class="btn">🚀 Comenzar Vuelo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ JUEGO: PALABRAS ============ -->
+  <section id="pantalla-palabras" class="pantalla">
+    <div class="panel-control">
+      <div id="selector-dif-palabras" class="selector-dificultad"></div>
+      <div class="stats-live">
+        <span>Palabras: <strong id="pal-progreso">1/5</strong></span>
+        <span>Puntos: <strong id="pal-puntos">0</strong></span>
+      </div>
+    </div>
+    <div class="contenedor-palabras">
+      <div id="palabra-pista" class="pista-palabra"></div>
+      <div id="palabra-casillas" class="casillas-palabra"></div>
+      <div id="palabra-teclado" class="teclado-palabra"></div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRESO ============ -->
+  <section id="pantalla-progreso" class="pantalla">
+    <h2>📊 Progreso de Oscar</h2>
+    <p class="subtitulo">Resumen de sesiones para compartir con el equipo médico y de kinesiología.</p>
+    
+    <div id="progreso-resumen-general" class="tarjeta-resumen-general"></div>
+    <div id="progreso-historial" class="historial-sesiones"></div>
+
+    <div class="acciones-progreso">
+      <button id="btn-exportar" class="btn">📄 Exportar Informe (.txt)</button>
+      <button id="btn-volver-desde-progreso" class="btn btn-suave">🏠 Volver al Menú</button>
+    </div>
+  </section>
+
+  <!-- ============ CONFIGURACIÓN ============ -->
+  <section id="pantalla-config" class="pantalla">
+    <h2>⚙️ Opciones Terapéuticas</h2>
+    <p class="subtitulo">Ajustes personalizados para la recuperación de Oscar.</p>
+
+    <div class="lista-config">
+      <label class="item-config">
+        <input type="checkbox" id="chk-hemianopsia">
+        <div class="txt">
+          <strong>👁️‍🗨️ Modo Hemianopsia Izquierda</strong>
+          <p>Prioriza la aparición de elementos en el lado izquierdo y activa una guía brillante de escaneo visual.</p>
+        </div>
+      </label>
+
+      <label class="item-config">
+        <input type="checkbox" id="chk-cimt">
+        <div class="txt">
+          <strong>✋ Modo CIMT (Mano Izquierda)</strong>
+          <p>Premia el esfuerzo al utilizar el brazo/mano afectado sumando bonificaciones de puntos al finalizar cada ejercicio.</p>
+        </div>
+      </label>
+
+      <label class="item-config">
+        <input type="checkbox" id="chk-multi">
+        <div class="txt">
+          <strong>🔊 Retroalimentación Multisensorial</strong>
+          <p>Activa la voz de apoyo personalizada para Oscar y respuestas por vibración.</p>
+        </div>
+      </label>
+
+      <label class="item-config">
+        <input type="checkbox" id="chk-enfoque">
+        <div class="txt">
+          <strong>🎯 Modo Enfoque</strong>
+          <p>Oculta estímulos secundarios para evitar sobrecarga y fatiga cognitiva.</p>
+        </div>
+      </label>
+    </div>
+
+    <button id="btn-volver-desde-config" class="btn btn-suave" style="margin-top:20px;">🏠 Guardar y Volver</button>
+  </section>
+</main>
+
+<!-- ============ MODALES ============ -->
+<div id="modal-resumen" class="modal">
+  <div class="modal-caja">
+    <h2 id="resumen-titulo">¡Excelente Trabajo!</h2>
+    <div id="resumen-stats" class="res-stats"></div>
+    <p id="resumen-mensaje" class="resumen-mensaje"></p>
+    <div id="contenedor-cimt"></div>
+    <div class="modal-botones">
+      <button id="btn-resumen-repetir" class="btn btn-secundario">🔄 Repetir</button>
+      <button id="btn-resumen-menu" class="btn btn-suave">🏠 Menú Principal</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal-pausa" class="modal">
+  <div class="modal-caja">
+    <h2>⏸️ Juego en Pausa</h2>
+    <p>Descansá todo el tiempo que necesites, Oscar. 🙂</p>
+    <div class="modal-botones">
+      <button id="btn-pausa-continuar" class="btn">▶️ Continuar</button>
+      <button id="btn-pausa-salir" class="btn btn-suave">🚪 Salir al Menú</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
